@@ -1,6 +1,6 @@
 # Jetty-Evaluation
 
-This repository evaluates to which degree [https://github.com/DaGeRe/peass](Peass) is able to identify performance regressions in the application server jetty.
+This repository evaluates to which degree [Peass](https://github.com/DaGeRe/peass) is able to identify performance regressions in the application server jetty.
 
 It is assumed that `$PROJECTFOLDER` is your local jetty folder (execute `git clone https://github.com/eclipse/jetty.project.git` to get the project) and that you have build the evaluation project (`mvn clean package`). Additionally, it is assumed that you can transfer the experimental repository using `$MYURL` (e.g. you could create a GitHub repository and and replace `$MYURL` by this repository).
 
