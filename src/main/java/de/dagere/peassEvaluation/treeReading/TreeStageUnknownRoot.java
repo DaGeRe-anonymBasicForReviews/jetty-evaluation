@@ -94,6 +94,9 @@ public class TreeStageUnknownRoot extends AbstractTraceProcessingStage<Execution
    private void setModule(final String fullClassname, final CallTreeNode node) {
       final String outerClazzName = ClazzFileFinder.getOuterClass(fullClassname);
       final String moduleOfClass = mapping.getModuleOfClass(outerClazzName);
+      if (moduleOfClass == null) {
+         throw new RuntimeException("Module of " + outerClazzName + " not found " + fullClassname);
+      }
       node.setModule(moduleOfClass);
    }
 
