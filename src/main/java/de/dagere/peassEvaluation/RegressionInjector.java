@@ -7,7 +7,7 @@ import java.util.concurrent.Callable;
 import picocli.CommandLine;
 import picocli.CommandLine.Option;
 
-public class ProblemInjector implements Callable<Void> {
+public class RegressionInjector implements Callable<Void> {
 
    @Option(names = { "-projectFolder", "--projectFolder" }, description = "Folder of project (for code analysis)", required = true)
    private File projectFolder;
@@ -20,7 +20,7 @@ public class ProblemInjector implements Callable<Void> {
 
    public static void main(final String[] args) {
       try {
-         final CommandLine commandLine = new CommandLine(new ProblemInjector());
+         final CommandLine commandLine = new CommandLine(new RegressionInjector());
          commandLine.execute(args);
       } catch (final Throwable t) {
          t.printStackTrace();

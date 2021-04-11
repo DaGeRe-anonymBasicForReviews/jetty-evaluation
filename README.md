@@ -11,16 +11,16 @@ It is assumed that `$PROJECTFOLDER` is your local jetty folder (execute `git clo
 - Execute the trace creation by `cp src/main/resources/getTrees.sh $PROJECTFOLDER/ && cd $PROJECTFOLDER && ./getTrees.sh`
 - Analyse the traces running `java -cp target/jetty-evaluation-0.1-SNAPSHOT.jar de.dagere.peassEvaluation.GetTrees -projectFolder $PROJECTFOLDER -tree $PROJECTFOLDER/tree-results/traces/`
 
-## Problem Injection
+## Regression Injection
 
 - Reset the project (e.g. using `cd $PROJECTFOLDER && git reset --hard`)
-- Run `java -cp target/jetty-evaluation-0.1-SNAPSHOT.jar de.dagere.peassEvaluation.ProblemInjector -projectFolder $PROJECTFOLDER -dataFolder $PROJECTFOLDER/tree-results` to inject performance regression in your local repository.
+- Run `java -cp target/jetty-evaluation-0.1-SNAPSHOT.jar de.dagere.peassEvaluation.RegressionInjector -projectFolder $PROJECTFOLDER -dataFolder $PROJECTFOLDER/tree-results` to inject performance regression in your local repository. A file called regressions.csv will be created, which contains a list of the branch with the regression (e.g. `regression-0`) and the benchmark that is affected (e.g. `org.eclipse.jetty.util.thread.strategy.jmh.EWYKBenchmark`)
 - Commit the repository and make it usable for measurement in your measurement slaves, usually by creating a new repository and calling `git remote add experimentrepo $MYURL`
 
 ## Measurement with JMH
 
 - Clone your measurement version using `git clone $MYURL` to the local `$PROJECTFOLDER` on your measurement slave.
-- 
+- Execute the measurement, either using start.sh if you got a slurm cluster available or by setting `$benchmark` to the first entry of the regression.csv file (e.g. `export regression=regression-0`) and `$benchmark` to the second entry of the csv (e.g. `export benchmark=org.eclipse.jetty.util.thread.strategy.jmh.EWYKBenchmark`) of one line, and then execute the measurements by calling `src/main/resources/runEvaluation.sh` (you will need to adapt the `$PATH` and the url that is cloned).
 
 
 ## Measurement with Peass
