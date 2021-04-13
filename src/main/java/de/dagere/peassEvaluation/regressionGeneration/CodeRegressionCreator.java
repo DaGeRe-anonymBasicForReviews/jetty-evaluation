@@ -63,12 +63,7 @@ public class CodeRegressionCreator {
    private void insertToMethod(final CallableDeclaration<?> callable, final Statement busyWait) {
       MethodDeclaration method = (MethodDeclaration) callable;
       BlockStmt oldBody = method.getBody().get();
-      BlockStmt changed;
-      if (oldBody.getStatements().getLast().get().isReturnStmt()) {
-         changed = oldBody.addStatement(oldBody.getStatements().size() - 1, busyWait);
-      } else {
-         changed = oldBody.addStatement(busyWait);
-      }
+      BlockStmt changed = oldBody.addStatement(0, busyWait);
       method.setBody(changed);
    }
 }
