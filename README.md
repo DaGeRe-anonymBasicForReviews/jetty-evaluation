@@ -20,7 +20,7 @@ It is assumed that `$PROJECTFOLDER` is your local jetty folder (execute `git clo
 ## Measurement with JMH
 
 - Clone your measurement version using `git clone $MYURL` to the local `$PROJECTFOLDER` on your measurement slave.
-- Execute the measurement, either using start.sh if you got a slurm cluster available or by setting `$benchmark` to the first entry of the regression.csv file (e.g. `export regression=regression-0`) and `$benchmark` to the second entry of the csv (e.g. `export benchmark=org.eclipse.jetty.util.thread.strategy.jmh.EWYKBenchmark`) of one line, and then execute the measurements by calling `src/main/resources/runEvaluation.sh` (you will need to adapt the `$PATH` and the url that is cloned).
+- Execute the measurement. This can either be done using start.sh if you got a slurm cluster available, or manually. If you want to execute the measurement manually, take each line and set `$regression` to the first column of the line file (e.g. `export regression=regression-0`) and `$benchmark` to the second column of the line (e.g. `export benchmark=org.eclipse.jetty.util.thread.strategy.jmh.EWYKBenchmark`), and then execute the measurements by calling `src/main/resources/runEvaluation.sh` (you will need to adapt the `$PATH` and the url that is cloned).
 
 
 ## Measurement with Peass
