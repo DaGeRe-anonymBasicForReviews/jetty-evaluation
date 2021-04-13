@@ -1,9 +1,10 @@
-package de.dagere.peassEvaluation.regressionGeneration;
+package de.dagere.peassEvaluation;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.util.concurrent.Callable;
 
+import de.dagere.peassEvaluation.regressionGeneration.RegressionBranchGenerator;
 import picocli.CommandLine;
 import picocli.CommandLine.Option;
 
