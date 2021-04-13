@@ -9,7 +9,7 @@ jobs:
   build:
     strategy: 
         matrix:
-          os: [ubuntu-latest, windows-latest, macos-latest]
+          os: [windows-latest]
           java: [ 11, 15 ]
         fail-fast: false
     runs-on: ${{ matrix.os }}
@@ -26,7 +26,12 @@ jobs:
         path: ~/.m2
         key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
         restore-keys: ${{ runner.os }}-m2
-    - name: Build with Maven
+    - name: Build on Windows
+      if: startsWith(matrix.os,'windows')
       run: |
-         cd /home/runner/work/ && git clone https://github.com/DaGeRe/peass.git && cd peass && mvn clean install -DskipTests
-         cd /home/runner/work/jetty-evaluation/jetty-evaluation/ && mvn -B package --file pom.yaml
+        git config --system core.longpaths true
+        dir
+        $Env:Path
+        mvn -version
+        cd "C:\Program Files" && dir && git clone https://github.com/DaGeRe/peass.git && cd peass && mvn clean install -DskipTests
+        cd "D:\a\jetty-evaluation\jetty-evaluation" && mvn -B package --file pom.yaml
