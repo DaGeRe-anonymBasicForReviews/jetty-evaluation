@@ -29,4 +29,4 @@ jobs:
     - name: Build with Maven
       run: |
          cd /home/runner/work/ && git clone https://github.com/DaGeRe/peass.git && cd peass && mvn clean install -DskipTests
-         cd /home/runner/work/jetty-evaluation/jetty-evaluation/ && mvn -B package --file pom.xml
+         cd /home/runner/work/jetty-evaluation/jetty-evaluation/ && mvn -B package --file pom.yaml
