@@ -33,11 +33,7 @@ public class ExecutionPreparer {
          if (potentialModuleFile.exists()) {
             ModuleInfoEditor.addKiekerRequires(potentialModuleFile);
          }
-         
-//         final File srcFolder = new File(module, "src");
-//         if (srcFolder.exists()) {
-//            
-//         }
+
       }
       instrumentSources(projectFolder);
    }

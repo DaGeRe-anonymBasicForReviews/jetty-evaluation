@@ -1,4 +1,4 @@
-package de.dagere.peassEvaluation;
+package de.dagere.peassEvaluation.regressionGeneration;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -21,6 +21,7 @@ import com.github.javaparser.ast.body.ConstructorDeclaration;
 import com.github.javaparser.ast.body.MethodDeclaration;
 import com.github.javaparser.ast.stmt.BlockStmt;
 
+import de.dagere.peassEvaluation.GitRegressionBranchUtil;
 import de.peass.dependency.ClazzFileFinder;
 import de.peass.dependency.analysis.data.ChangedEntity;
 import de.peass.dependency.changesreading.JavaParserProvider;

@@ -9,6 +9,9 @@ import org.junit.jupiter.api.Test;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 
+import de.dagere.peassEvaluation.statistics.JmhBenchmarkValues;
+import de.dagere.peassEvaluation.statistics.JmhReader;
+
 public class TestValueAnalysis {
 
    @Test

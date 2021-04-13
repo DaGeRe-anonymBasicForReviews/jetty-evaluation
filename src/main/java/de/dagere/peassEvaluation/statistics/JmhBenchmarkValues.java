@@ -1,4 +1,4 @@
-package de.dagere.peassEvaluation;
+package de.dagere.peassEvaluation.statistics;
 
 import java.util.List;
 

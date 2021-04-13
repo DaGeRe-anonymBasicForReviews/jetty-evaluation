@@ -1,4 +1,4 @@
-package de.dagere.peassEvaluation;
+package de.dagere.peassEvaluation.regressionGeneration;
 
 import java.io.File;
 import java.io.FileWriter;
