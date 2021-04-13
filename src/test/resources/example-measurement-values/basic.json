@@ -1,0 +1,1188 @@
+[
+    {
+        "jmhVersion" : "1.26",
+        "benchmark" : "org.eclipse.jetty.util.PoolStrategyBenchmark.testAcquireReleasePoolWithStrategy",
+        "mode" : "thrpt",
+        "threads" : 3,
+        "forks" : 5,
+        "jvm" : "/usr/lib/jvm/java-11-openjdk-11.0.10.0.9-0.el7_9.x86_64/bin/java",
+        "jvmArgs" : [
+        ],
+        "jdkVersion" : "11.0.10",
+        "vmName" : "OpenJDK 64-Bit Server VM",
+        "vmVersion" : "11.0.10+9-LTS",
+        "warmupIterations" : 3,
+        "warmupTime" : "10 s",
+        "warmupBatchSize" : 1,
+        "measurementIterations" : 3,
+        "measurementTime" : "10 s",
+        "measurementBatchSize" : 1,
+        "params" : {
+            "CACHE" : "false",
+            "POOL_TYPE" : "Pool.Linear",
+            "SIZE" : "4"
+        },
+        "primaryMetric" : {
+            "score" : 8897841.621005083,
+            "scoreError" : 754202.2898317131,
+            "scoreConfidence" : [
+                8143639.33117337,
+                9652043.910836795
+            ],
+            "scorePercentiles" : {
+                "0.0" : 7582554.847882789,
+                "50.0" : 9195628.45195809,
+                "90.0" : 9505644.380642483,
+                "95.0" : 9511002.287298562,
+                "99.0" : 9511002.287298562,
+                "99.9" : 9511002.287298562,
+                "99.99" : 9511002.287298562,
+                "99.999" : 9511002.287298562,
+                "99.9999" : 9511002.287298562,
+                "100.0" : 9511002.287298562
+            },
+            "scoreUnit" : "ops/s",
+            "rawData" : [
+                [
+                    9430822.683439875,
+                    9511002.287298562,
+                    9430954.576853175
+                ],
+                [
+                    8808923.086838156,
+                    8754086.529156663,
+                    8863455.268814612
+                ],
+                [
+                    9195628.45195809,
+                    9232064.808232203,
+                    9210664.999626545
+                ],
+                [
+                    7675924.586404987,
+                    7603099.8837321475,
+                    7582554.847882789
+                ],
+                [
+                    9494516.00188068,
+                    9502072.442871764,
+                    9171853.860085996
+                ]
+            ]
+        },
+        "secondaryMetrics" : {
+        }
+    },
+    {
+        "jmhVersion" : "1.26",
+        "benchmark" : "org.eclipse.jetty.util.PoolStrategyBenchmark.testAcquireReleasePoolWithStrategy",
+        "mode" : "thrpt",
+        "threads" : 3,
+        "forks" : 5,
+        "jvm" : "/usr/lib/jvm/java-11-openjdk-11.0.10.0.9-0.el7_9.x86_64/bin/java",
+        "jvmArgs" : [
+        ],
+        "jdkVersion" : "11.0.10",
+        "vmName" : "OpenJDK 64-Bit Server VM",
+        "vmVersion" : "11.0.10+9-LTS",
+        "warmupIterations" : 3,
+        "warmupTime" : "10 s",
+        "warmupBatchSize" : 1,
+        "measurementIterations" : 3,
+        "measurementTime" : "10 s",
+        "measurementBatchSize" : 1,
+        "params" : {
+            "CACHE" : "false",
+            "POOL_TYPE" : "Pool.Linear",
+            "SIZE" : "16"
+        },
+        "primaryMetric" : {
+            "score" : 9674404.780799752,
+            "scoreError" : 494099.56286359177,
+            "scoreConfidence" : [
+                9180305.21793616,
+                1.0168504343663344E7
+            ],
+            "scorePercentiles" : {
+                "0.0" : 8790520.792069718,
+                "50.0" : 9813773.644712737,
+                "90.0" : 1.0219303714833748E7,
+                "95.0" : 1.0249648436467389E7,
+                "99.0" : 1.0249648436467389E7,
+                "99.9" : 1.0249648436467389E7,
+                "99.99" : 1.0249648436467389E7,
+                "99.999" : 1.0249648436467389E7,
+                "99.9999" : 1.0249648436467389E7,
+                "100.0" : 1.0249648436467389E7
+            },
+            "scoreUnit" : "ops/s",
+            "rawData" : [
+                [
+                    8790520.792069718,
+                    8941986.354731107,
+                    8854004.269622488
+                ],
+                [
+                    9612498.74035807,
+                    9533589.90064751,
+                    9859588.296252534
+                ],
+                [
+                    1.0199073900411319E7,
+                    1.0249648436467389E7,
+                    9963069.590818575
+                ],
+                [
+                    9884110.611757588,
+                    9975821.020359121,
+                    9796165.199195303
+                ],
+                [
+                    9813773.644712737,
+                    9679289.152676916,
+                    9962931.801915927
+                ]
+            ]
+        },
+        "secondaryMetrics" : {
+        }
+    },
+    {
+        "jmhVersion" : "1.26",
+        "benchmark" : "org.eclipse.jetty.util.PoolStrategyBenchmark.testAcquireReleasePoolWithStrategy",
+        "mode" : "thrpt",
+        "threads" : 3,
+        "forks" : 5,
+        "jvm" : "/usr/lib/jvm/java-11-openjdk-11.0.10.0.9-0.el7_9.x86_64/bin/java",
+        "jvmArgs" : [
+        ],
+        "jdkVersion" : "11.0.10",
+        "vmName" : "OpenJDK 64-Bit Server VM",
+        "vmVersion" : "11.0.10+9-LTS",
+        "warmupIterations" : 3,
+        "warmupTime" : "10 s",
+        "warmupBatchSize" : 1,
+        "measurementIterations" : 3,
+        "measurementTime" : "10 s",
+        "measurementBatchSize" : 1,
+        "params" : {
+            "CACHE" : "false",
+            "POOL_TYPE" : "Pool.Random",
+            "SIZE" : "4"
+        },
+        "primaryMetric" : {
+            "score" : 9122530.921898913,
+            "scoreError" : 1291801.8356574106,
+            "scoreConfidence" : [
+                7830729.086241502,
+                1.0414332757556323E7
+            ],
+            "scorePercentiles" : {
+                "0.0" : 7979871.977587989,
+                "50.0" : 8585523.90724065,
+                "90.0" : 1.138680207728379E7,
+                "95.0" : 1.1631110546404814E7,
+                "99.0" : 1.1631110546404814E7,
+                "99.9" : 1.1631110546404814E7,
+                "99.99" : 1.1631110546404814E7,
+                "99.999" : 1.1631110546404814E7,
+                "99.9999" : 1.1631110546404814E7,
+                "100.0" : 1.1631110546404814E7
+            },
+            "scoreUnit" : "ops/s",
+            "rawData" : [
+                [
+                    8614644.547789378,
+                    8508226.684182545,
+                    8585523.90724065
+                ],
+                [
+                    1.122392976453644E7,
+                    1.1631110546404814E7,
+                    1.1168878267054249E7
+                ],
+                [
+                    8560936.675539592,
+                    9398749.252698086,
+                    9149685.337145148
+                ],
+                [
+                    8492056.949022707,
+                    8736137.669901874,
+                    8581606.277136307
+                ],
+                [
+                    8046772.168059431,
+                    8159833.80418447,
+                    7979871.977587989
+                ]
+            ]
+        },
+        "secondaryMetrics" : {
+        }
+    },
+    {
+        "jmhVersion" : "1.26",
+        "benchmark" : "org.eclipse.jetty.util.PoolStrategyBenchmark.testAcquireReleasePoolWithStrategy",
+        "mode" : "thrpt",
+        "threads" : 3,
+        "forks" : 5,
+        "jvm" : "/usr/lib/jvm/java-11-openjdk-11.0.10.0.9-0.el7_9.x86_64/bin/java",
+        "jvmArgs" : [
+        ],
+        "jdkVersion" : "11.0.10",
+        "vmName" : "OpenJDK 64-Bit Server VM",
+        "vmVersion" : "11.0.10+9-LTS",
+        "warmupIterations" : 3,
+        "warmupTime" : "10 s",
+        "warmupBatchSize" : 1,
+        "measurementIterations" : 3,
+        "measurementTime" : "10 s",
+        "measurementBatchSize" : 1,
+        "params" : {
+            "CACHE" : "false",
+            "POOL_TYPE" : "Pool.Random",
+            "SIZE" : "16"
+        },
+        "primaryMetric" : {
+            "score" : 1.2898048539492773E7,
+            "scoreError" : 223643.8795646699,
+            "scoreConfidence" : [
+                1.2674404659928102E7,
+                1.3121692419057444E7
+            ],
+            "scorePercentiles" : {
+                "0.0" : 1.246394229478741E7,
+                "50.0" : 1.2925801883536533E7,
+                "90.0" : 1.3174814241481636E7,
+                "95.0" : 1.319320057329591E7,
+                "99.0" : 1.319320057329591E7,
+                "99.9" : 1.319320057329591E7,
+                "99.99" : 1.319320057329591E7,
+                "99.999" : 1.319320057329591E7,
+                "99.9999" : 1.319320057329591E7,
+                "100.0" : 1.319320057329591E7
+            },
+            "scoreUnit" : "ops/s",
+            "rawData" : [
+                [
+                    1.311129617408328E7,
+                    1.319320057329591E7,
+                    1.3162556686938785E7
+                ],
+                [
+                    1.2916837717873726E7,
+                    1.2925801883536533E7,
+                    1.2919214404335344E7
+                ],
+                [
+                    1.246394229478741E7,
+                    1.254086955635101E7,
+                    1.2740744827622214E7
+                ],
+                [
+                    1.276612210188622E7,
+                    1.2776857785648666E7,
+                    1.298255547987785E7
+                ],
+                [
+                    1.2945510274765527E7,
+                    1.300729603742186E7,
+                    1.3017922293967254E7
+                ]
+            ]
+        },
+        "secondaryMetrics" : {
+        }
+    },
+    {
+        "jmhVersion" : "1.26",
+        "benchmark" : "org.eclipse.jetty.util.PoolStrategyBenchmark.testAcquireReleasePoolWithStrategy",
+        "mode" : "thrpt",
+        "threads" : 3,
+        "forks" : 5,
+        "jvm" : "/usr/lib/jvm/java-11-openjdk-11.0.10.0.9-0.el7_9.x86_64/bin/java",
+        "jvmArgs" : [
+        ],
+        "jdkVersion" : "11.0.10",
+        "vmName" : "OpenJDK 64-Bit Server VM",
+        "vmVersion" : "11.0.10+9-LTS",
+        "warmupIterations" : 3,
+        "warmupTime" : "10 s",
+        "warmupBatchSize" : 1,
+        "measurementIterations" : 3,
+        "measurementTime" : "10 s",
+        "measurementBatchSize" : 1,
+        "params" : {
+            "CACHE" : "false",
+            "POOL_TYPE" : "Pool.RoundRobin",
+            "SIZE" : "4"
+        },
+        "primaryMetric" : {
+            "score" : 6245282.33703813,
+            "scoreError" : 444411.2776101718,
+            "scoreConfidence" : [
+                5800871.059427958,
+                6689693.614648301
+            ],
+            "scorePercentiles" : {
+                "0.0" : 5806444.329171844,
+                "50.0" : 6187701.686599184,
+                "90.0" : 7027106.253664663,
+                "95.0" : 7067004.788033788,
+                "99.0" : 7067004.788033788,
+                "99.9" : 7067004.788033788,
+                "99.99" : 7067004.788033788,
+                "99.999" : 7067004.788033788,
+                "99.9999" : 7067004.788033788,
+                "100.0" : 7067004.788033788
+            },
+            "scoreUnit" : "ops/s",
+            "rawData" : [
+                [
+                    7067004.788033788,
+                    7000507.230751913,
+                    6891818.5415320955
+                ],
+                [
+                    6265149.629186006,
+                    6259377.358929414,
+                    6205649.350964743
+                ],
+                [
+                    5888181.143398699,
+                    5918211.93157745,
+                    5964391.785402088
+                ],
+                [
+                    5922706.930068022,
+                    5806444.329171844,
+                    5888387.73675252
+                ],
+                [
+                    6187701.686599184,
+                    6136556.841453846,
+                    6277145.77175031
+                ]
+            ]
+        },
+        "secondaryMetrics" : {
+        }
+    },
+    {
+        "jmhVersion" : "1.26",
+        "benchmark" : "org.eclipse.jetty.util.PoolStrategyBenchmark.testAcquireReleasePoolWithStrategy",
+        "mode" : "thrpt",
+        "threads" : 3,
+        "forks" : 5,
+        "jvm" : "/usr/lib/jvm/java-11-openjdk-11.0.10.0.9-0.el7_9.x86_64/bin/java",
+        "jvmArgs" : [
+        ],
+        "jdkVersion" : "11.0.10",
+        "vmName" : "OpenJDK 64-Bit Server VM",
+        "vmVersion" : "11.0.10+9-LTS",
+        "warmupIterations" : 3,
+        "warmupTime" : "10 s",
+        "warmupBatchSize" : 1,
+        "measurementIterations" : 3,
+        "measurementTime" : "10 s",
+        "measurementBatchSize" : 1,
+        "params" : {
+            "CACHE" : "false",
+            "POOL_TYPE" : "Pool.RoundRobin",
+            "SIZE" : "16"
+        },
+        "primaryMetric" : {
+            "score" : 6704202.547718109,
+            "scoreError" : 290975.1073770446,
+            "scoreConfidence" : [
+                6413227.440341064,
+                6995177.6550951535
+            ],
+            "scorePercentiles" : {
+                "0.0" : 6374240.000675682,
+                "50.0" : 6613635.532531778,
+                "90.0" : 7086810.40794963,
+                "95.0" : 7133287.495210064,
+                "99.0" : 7133287.495210064,
+                "99.9" : 7133287.495210064,
+                "99.99" : 7133287.495210064,
+                "99.999" : 7133287.495210064,
+                "99.9999" : 7133287.495210064,
+                "100.0" : 7133287.495210064
+            },
+            "scoreUnit" : "ops/s",
+            "rawData" : [
+                [
+                    6476977.246300951,
+                    6374240.000675682,
+                    6417496.555942065
+                ],
+                [
+                    6499131.025043264,
+                    6423271.14593341,
+                    6450155.540459563
+                ],
+                [
+                    6613635.532531778,
+                    6608410.507714055,
+                    6649781.757150793
+                ],
+                [
+                    6913977.126168633,
+                    7055825.683109341,
+                    6982922.360582405
+                ],
+                [
+                    6932841.248793571,
+                    7133287.495210064,
+                    7031084.990156058
+                ]
+            ]
+        },
+        "secondaryMetrics" : {
+        }
+    },
+    {
+        "jmhVersion" : "1.26",
+        "benchmark" : "org.eclipse.jetty.util.PoolStrategyBenchmark.testAcquireReleasePoolWithStrategy",
+        "mode" : "thrpt",
+        "threads" : 3,
+        "forks" : 5,
+        "jvm" : "/usr/lib/jvm/java-11-openjdk-11.0.10.0.9-0.el7_9.x86_64/bin/java",
+        "jvmArgs" : [
+        ],
+        "jdkVersion" : "11.0.10",
+        "vmName" : "OpenJDK 64-Bit Server VM",
+        "vmVersion" : "11.0.10+9-LTS",
+        "warmupIterations" : 3,
+        "warmupTime" : "10 s",
+        "warmupBatchSize" : 1,
+        "measurementIterations" : 3,
+        "measurementTime" : "10 s",
+        "measurementBatchSize" : 1,
+        "params" : {
+            "CACHE" : "false",
+            "POOL_TYPE" : "Pool.ThreadId",
+            "SIZE" : "4"
+        },
+        "primaryMetric" : {
+            "score" : 2.368025575955138E7,
+            "scoreError" : 1.670732480488052E7,
+            "scoreConfidence" : [
+                6972930.9546708595,
+                4.03875805644319E7
+            ],
+            "scorePercentiles" : {
+                "0.0" : 9365852.496113231,
+                "50.0" : 1.3385658687862948E7,
+                "90.0" : 4.3086255304720566E7,
+                "95.0" : 4.3224065585368976E7,
+                "99.0" : 4.3224065585368976E7,
+                "99.9" : 4.3224065585368976E7,
+                "99.99" : 4.3224065585368976E7,
+                "99.999" : 4.3224065585368976E7,
+                "99.9999" : 4.3224065585368976E7,
+                "100.0" : 4.3224065585368976E7
+            },
+            "scoreUnit" : "ops/s",
+            "rawData" : [
+                [
+                    1.3385658687862948E7,
+                    1.3428752142751627E7,
+                    1.2127076889479056E7
+                ],
+                [
+                    9501155.198045332,
+                    1.2026254368166776E7,
+                    9493453.39356755
+                ],
+                [
+                    4.3224065585368976E7,
+                    4.1400050611329354E7,
+                    4.017492195209788E7
+                ],
+                [
+                    1.2060356880893573E7,
+                    1.1232130375093147E7,
+                    9365852.496113231
+                ],
+                [
+                    4.299438178428829E7,
+                    4.2718572406072475E7,
+                    4.207115362214042E7
+                ]
+            ]
+        },
+        "secondaryMetrics" : {
+        }
+    },
+    {
+        "jmhVersion" : "1.26",
+        "benchmark" : "org.eclipse.jetty.util.PoolStrategyBenchmark.testAcquireReleasePoolWithStrategy",
+        "mode" : "thrpt",
+        "threads" : 3,
+        "forks" : 5,
+        "jvm" : "/usr/lib/jvm/java-11-openjdk-11.0.10.0.9-0.el7_9.x86_64/bin/java",
+        "jvmArgs" : [
+        ],
+        "jdkVersion" : "11.0.10",
+        "vmName" : "OpenJDK 64-Bit Server VM",
+        "vmVersion" : "11.0.10+9-LTS",
+        "warmupIterations" : 3,
+        "warmupTime" : "10 s",
+        "warmupBatchSize" : 1,
+        "measurementIterations" : 3,
+        "measurementTime" : "10 s",
+        "measurementBatchSize" : 1,
+        "params" : {
+            "CACHE" : "false",
+            "POOL_TYPE" : "Pool.ThreadId",
+            "SIZE" : "16"
+        },
+        "primaryMetric" : {
+            "score" : 3.855965713078217E7,
+            "scoreError" : 1285769.7731182636,
+            "scoreConfidence" : [
+                3.727388735766391E7,
+                3.984542690390044E7
+            ],
+            "scorePercentiles" : {
+                "0.0" : 3.620547679428915E7,
+                "50.0" : 3.880798007126825E7,
+                "90.0" : 4.01490507059005E7,
+                "95.0" : 4.0251545501532234E7,
+                "99.0" : 4.0251545501532234E7,
+                "99.9" : 4.0251545501532234E7,
+                "99.99" : 4.0251545501532234E7,
+                "99.999" : 4.0251545501532234E7,
+                "99.9999" : 4.0251545501532234E7,
+                "100.0" : 4.0251545501532234E7
+            },
+            "scoreUnit" : "ops/s",
+            "rawData" : [
+                [
+                    4.0251545501532234E7,
+                    3.957832040754776E7,
+                    3.9939588445774674E7
+                ],
+                [
+                    3.7364347775154606E7,
+                    3.7516318441818975E7,
+                    3.8173853733282715E7
+                ],
+                [
+                    3.620547679428915E7,
+                    3.781802562083222E7,
+                    3.691685627584464E7
+                ],
+                [
+                    3.880798007126825E7,
+                    3.8848952980084024E7,
+                    3.907945919357042E7
+                ],
+                [
+                    4.0080720842146E7,
+                    3.880778572249186E7,
+                    3.900562515609505E7
+                ]
+            ]
+        },
+        "secondaryMetrics" : {
+        }
+    },
+    {
+        "jmhVersion" : "1.26",
+        "benchmark" : "org.eclipse.jetty.util.PoolStrategyBenchmark.testAcquireReleasePoolWithStrategy",
+        "mode" : "thrpt",
+        "threads" : 3,
+        "forks" : 5,
+        "jvm" : "/usr/lib/jvm/java-11-openjdk-11.0.10.0.9-0.el7_9.x86_64/bin/java",
+        "jvmArgs" : [
+        ],
+        "jdkVersion" : "11.0.10",
+        "vmName" : "OpenJDK 64-Bit Server VM",
+        "vmVersion" : "11.0.10+9-LTS",
+        "warmupIterations" : 3,
+        "warmupTime" : "10 s",
+        "warmupBatchSize" : 1,
+        "measurementIterations" : 3,
+        "measurementTime" : "10 s",
+        "measurementBatchSize" : 1,
+        "params" : {
+            "CACHE" : "true",
+            "POOL_TYPE" : "Pool.Linear",
+            "SIZE" : "4"
+        },
+        "primaryMetric" : {
+            "score" : 4.7987433409403734E7,
+            "scoreError" : 1418995.003435086,
+            "scoreConfidence" : [
+                4.656843840596865E7,
+                4.940642841283882E7
+            ],
+            "scorePercentiles" : {
+                "0.0" : 4.4289855296566874E7,
+                "50.0" : 4.8086946377566054E7,
+                "90.0" : 4.9366499925063774E7,
+                "95.0" : 4.974022728703597E7,
+                "99.0" : 4.974022728703597E7,
+                "99.9" : 4.974022728703597E7,
+                "99.99" : 4.974022728703597E7,
+                "99.999" : 4.974022728703597E7,
+                "99.9999" : 4.974022728703597E7,
+                "100.0" : 4.974022728703597E7
+            },
+            "scoreUnit" : "ops/s",
+            "rawData" : [
+                [
+                    4.91098605307257E7,
+                    4.8086946377566054E7,
+                    4.884777462118199E7
+                ],
+                [
+                    4.730632755940585E7,
+                    4.880056456525776E7,
+                    4.911734835041565E7
+                ],
+                [
+                    4.4289855296566874E7,
+                    4.739441178596508E7,
+                    4.7419232047516614E7
+                ],
+                [
+                    4.808325163853806E7,
+                    4.761937718873888E7,
+                    4.974022728703597E7
+                ],
+                [
+                    4.910864417860246E7,
+                    4.809262766368717E7,
+                    4.67950520498521E7
+                ]
+            ]
+        },
+        "secondaryMetrics" : {
+        }
+    },
+    {
+        "jmhVersion" : "1.26",
+        "benchmark" : "org.eclipse.jetty.util.PoolStrategyBenchmark.testAcquireReleasePoolWithStrategy",
+        "mode" : "thrpt",
+        "threads" : 3,
+        "forks" : 5,
+        "jvm" : "/usr/lib/jvm/java-11-openjdk-11.0.10.0.9-0.el7_9.x86_64/bin/java",
+        "jvmArgs" : [
+        ],
+        "jdkVersion" : "11.0.10",
+        "vmName" : "OpenJDK 64-Bit Server VM",
+        "vmVersion" : "11.0.10+9-LTS",
+        "warmupIterations" : 3,
+        "warmupTime" : "10 s",
+        "warmupBatchSize" : 1,
+        "measurementIterations" : 3,
+        "measurementTime" : "10 s",
+        "measurementBatchSize" : 1,
+        "params" : {
+            "CACHE" : "true",
+            "POOL_TYPE" : "Pool.Linear",
+            "SIZE" : "16"
+        },
+        "primaryMetric" : {
+            "score" : 4.883693073880484E7,
+            "scoreError" : 1188429.465918451,
+            "scoreConfidence" : [
+                4.764850127288639E7,
+                5.002536020472329E7
+            ],
+            "scorePercentiles" : {
+                "0.0" : 4.711809690417319E7,
+                "50.0" : 4.877539027499771E7,
+                "90.0" : 5.052162937711338E7,
+                "95.0" : 5.087825057362713E7,
+                "99.0" : 5.087825057362713E7,
+                "99.9" : 5.087825057362713E7,
+                "99.99" : 5.087825057362713E7,
+                "99.999" : 5.087825057362713E7,
+                "99.9999" : 5.087825057362713E7,
+                "100.0" : 5.087825057362713E7
+            },
+            "scoreUnit" : "ops/s",
+            "rawData" : [
+                [
+                    4.7728764167955115E7,
+                    4.770961215162867E7,
+                    4.784545034377164E7
+                ],
+                [
+                    4.80609106670647E7,
+                    4.711809690417319E7,
+                    4.8374221457092375E7
+                ],
+                [
+                    4.808468950102091E7,
+                    4.99789906165204E7,
+                    5.087825057362713E7
+                ],
+                [
+                    5.028388191277088E7,
+                    4.983526075847818E7,
+                    4.886531425526674E7
+                ],
+                [
+                    4.877539027499771E7,
+                    4.959914179064742E7,
+                    4.941598570705764E7
+                ]
+            ]
+        },
+        "secondaryMetrics" : {
+        }
+    },
+    {
+        "jmhVersion" : "1.26",
+        "benchmark" : "org.eclipse.jetty.util.PoolStrategyBenchmark.testAcquireReleasePoolWithStrategy",
+        "mode" : "thrpt",
+        "threads" : 3,
+        "forks" : 5,
+        "jvm" : "/usr/lib/jvm/java-11-openjdk-11.0.10.0.9-0.el7_9.x86_64/bin/java",
+        "jvmArgs" : [
+        ],
+        "jdkVersion" : "11.0.10",
+        "vmName" : "OpenJDK 64-Bit Server VM",
+        "vmVersion" : "11.0.10+9-LTS",
+        "warmupIterations" : 3,
+        "warmupTime" : "10 s",
+        "warmupBatchSize" : 1,
+        "measurementIterations" : 3,
+        "measurementTime" : "10 s",
+        "measurementBatchSize" : 1,
+        "params" : {
+            "CACHE" : "true",
+            "POOL_TYPE" : "Pool.Random",
+            "SIZE" : "4"
+        },
+        "primaryMetric" : {
+            "score" : 3.533097075779841E7,
+            "scoreError" : 1.8622258124420397E7,
+            "scoreConfidence" : [
+                1.6708712633378014E7,
+                5.395322888221881E7
+            ],
+            "scorePercentiles" : {
+                "0.0" : 1.3571009061285853E7,
+                "50.0" : 4.8098757386565834E7,
+                "90.0" : 5.044106171033341E7,
+                "95.0" : 5.108693774164037E7,
+                "99.0" : 5.108693774164037E7,
+                "99.9" : 5.108693774164037E7,
+                "99.99" : 5.108693774164037E7,
+                "99.999" : 5.108693774164037E7,
+                "99.9999" : 5.108693774164037E7,
+                "100.0" : 5.108693774164037E7
+            },
+            "scoreUnit" : "ops/s",
+            "rawData" : [
+                [
+                    4.8098757386565834E7,
+                    4.968438568196465E7,
+                    5.108693774164037E7
+                ],
+                [
+                    1.7532139024843052E7,
+                    1.4950505794999145E7,
+                    1.461498563565026E7
+                ],
+                [
+                    4.688539690685454E7,
+                    5.00104776894621E7,
+                    4.865902701701755E7
+                ],
+                [
+                    4.8794442679577656E7,
+                    4.8839789176454E7,
+                    4.926736931941262E7
+                ],
+                [
+                    1.3953989997054383E7,
+                    1.4015348254194077E7,
+                    1.3571009061285853E7
+                ]
+            ]
+        },
+        "secondaryMetrics" : {
+        }
+    },
+    {
+        "jmhVersion" : "1.26",
+        "benchmark" : "org.eclipse.jetty.util.PoolStrategyBenchmark.testAcquireReleasePoolWithStrategy",
+        "mode" : "thrpt",
+        "threads" : 3,
+        "forks" : 5,
+        "jvm" : "/usr/lib/jvm/java-11-openjdk-11.0.10.0.9-0.el7_9.x86_64/bin/java",
+        "jvmArgs" : [
+        ],
+        "jdkVersion" : "11.0.10",
+        "vmName" : "OpenJDK 64-Bit Server VM",
+        "vmVersion" : "11.0.10+9-LTS",
+        "warmupIterations" : 3,
+        "warmupTime" : "10 s",
+        "warmupBatchSize" : 1,
+        "measurementIterations" : 3,
+        "measurementTime" : "10 s",
+        "measurementBatchSize" : 1,
+        "params" : {
+            "CACHE" : "true",
+            "POOL_TYPE" : "Pool.Random",
+            "SIZE" : "16"
+        },
+        "primaryMetric" : {
+            "score" : 3.844714781006752E7,
+            "scoreError" : 1.4759310567909423E7,
+            "scoreConfidence" : [
+                2.3687837242158096E7,
+                5.320645837797694E7
+            ],
+            "scorePercentiles" : {
+                "0.0" : 1.0138362946467953E7,
+                "50.0" : 4.536001445732527E7,
+                "90.0" : 4.779655812050543E7,
+                "95.0" : 4.8343459856782995E7,
+                "99.0" : 4.8343459856782995E7,
+                "99.9" : 4.8343459856782995E7,
+                "99.99" : 4.8343459856782995E7,
+                "99.999" : 4.8343459856782995E7,
+                "99.9999" : 4.8343459856782995E7,
+                "100.0" : 4.8343459856782995E7
+            },
+            "scoreUnit" : "ops/s",
+            "rawData" : [
+                [
+                    4.292033414983483E7,
+                    4.536001445732527E7,
+                    4.584987341784562E7
+                ],
+                [
+                    4.168136452286391E7,
+                    4.054401843367404E7,
+                    4.130856938735781E7
+                ],
+                [
+                    4.743195696298706E7,
+                    4.6183890718197145E7,
+                    4.597357633337244E7
+                ],
+                [
+                    4.8343459856782995E7,
+                    4.7133780948073395E7,
+                    4.7364382989167854E7
+                ],
+                [
+                    1.3495670732934508E7,
+                    1.2977961294128016E7,
+                    1.0138362946467953E7
+                ]
+            ]
+        },
+        "secondaryMetrics" : {
+        }
+    },
+    {
+        "jmhVersion" : "1.26",
+        "benchmark" : "org.eclipse.jetty.util.PoolStrategyBenchmark.testAcquireReleasePoolWithStrategy",
+        "mode" : "thrpt",
+        "threads" : 3,
+        "forks" : 5,
+        "jvm" : "/usr/lib/jvm/java-11-openjdk-11.0.10.0.9-0.el7_9.x86_64/bin/java",
+        "jvmArgs" : [
+        ],
+        "jdkVersion" : "11.0.10",
+        "vmName" : "OpenJDK 64-Bit Server VM",
+        "vmVersion" : "11.0.10+9-LTS",
+        "warmupIterations" : 3,
+        "warmupTime" : "10 s",
+        "warmupBatchSize" : 1,
+        "measurementIterations" : 3,
+        "measurementTime" : "10 s",
+        "measurementBatchSize" : 1,
+        "params" : {
+            "CACHE" : "true",
+            "POOL_TYPE" : "Pool.RoundRobin",
+            "SIZE" : "4"
+        },
+        "primaryMetric" : {
+            "score" : 4.884137511783413E7,
+            "scoreError" : 842322.2698295705,
+            "scoreConfidence" : [
+                4.799905284800456E7,
+                4.96836973876637E7
+            ],
+            "scorePercentiles" : {
+                "0.0" : 4.7732543213778004E7,
+                "50.0" : 4.873292237686056E7,
+                "90.0" : 5.019569164745903E7,
+                "95.0" : 5.0514889598583326E7,
+                "99.0" : 5.0514889598583326E7,
+                "99.9" : 5.0514889598583326E7,
+                "99.99" : 5.0514889598583326E7,
+                "99.999" : 5.0514889598583326E7,
+                "99.9999" : 5.0514889598583326E7,
+                "100.0" : 5.0514889598583326E7
+            },
+            "scoreUnit" : "ops/s",
+            "rawData" : [
+                [
+                    4.8062724354933426E7,
+                    4.9277497741332024E7,
+                    4.8258527343330085E7
+                ],
+                [
+                    4.880215410167138E7,
+                    4.970322911590952E7,
+                    4.869753938678078E7
+                ],
+                [
+                    4.847139183057509E7,
+                    4.84929983808659E7,
+                    4.873292237686056E7
+                ],
+                [
+                    4.7732543213778004E7,
+                    4.890579605414064E7,
+                    4.917815039137831E7
+                ],
+                [
+                    4.998289301337616E7,
+                    5.0514889598583326E7,
+                    4.780736986399673E7
+                ]
+            ]
+        },
+        "secondaryMetrics" : {
+        }
+    },
+    {
+        "jmhVersion" : "1.26",
+        "benchmark" : "org.eclipse.jetty.util.PoolStrategyBenchmark.testAcquireReleasePoolWithStrategy",
+        "mode" : "thrpt",
+        "threads" : 3,
+        "forks" : 5,
+        "jvm" : "/usr/lib/jvm/java-11-openjdk-11.0.10.0.9-0.el7_9.x86_64/bin/java",
+        "jvmArgs" : [
+        ],
+        "jdkVersion" : "11.0.10",
+        "vmName" : "OpenJDK 64-Bit Server VM",
+        "vmVersion" : "11.0.10+9-LTS",
+        "warmupIterations" : 3,
+        "warmupTime" : "10 s",
+        "warmupBatchSize" : 1,
+        "measurementIterations" : 3,
+        "measurementTime" : "10 s",
+        "measurementBatchSize" : 1,
+        "params" : {
+            "CACHE" : "true",
+            "POOL_TYPE" : "Pool.RoundRobin",
+            "SIZE" : "16"
+        },
+        "primaryMetric" : {
+            "score" : 4.85005451627218E7,
+            "scoreError" : 1273199.0069226453,
+            "scoreConfidence" : [
+                4.722734615579915E7,
+                4.9773744169644445E7
+            ],
+            "scorePercentiles" : {
+                "0.0" : 4.638462124436546E7,
+                "50.0" : 4.851204975081104E7,
+                "90.0" : 5.006203841367959E7,
+                "95.0" : 5.0345241811191805E7,
+                "99.0" : 5.0345241811191805E7,
+                "99.9" : 5.0345241811191805E7,
+                "99.99" : 5.0345241811191805E7,
+                "99.999" : 5.0345241811191805E7,
+                "99.9999" : 5.0345241811191805E7,
+                "100.0" : 5.0345241811191805E7
+            },
+            "scoreUnit" : "ops/s",
+            "rawData" : [
+                [
+                    5.0345241811191805E7,
+                    4.8058097122594744E7,
+                    4.638462124436546E7
+                ],
+                [
+                    4.9873236148671456E7,
+                    4.9518952789977595E7,
+                    4.84602028840816E7
+                ],
+                [
+                    4.695492434102819E7,
+                    4.75490955801435E7,
+                    4.691554205952399E7
+                ],
+                [
+                    4.954739406406653E7,
+                    4.9854520682927996E7,
+                    4.873326874936408E7
+                ],
+                [
+                    4.851204975081104E7,
+                    4.824501481751485E7,
+                    4.855601539456402E7
+                ]
+            ]
+        },
+        "secondaryMetrics" : {
+        }
+    },
+    {
+        "jmhVersion" : "1.26",
+        "benchmark" : "org.eclipse.jetty.util.PoolStrategyBenchmark.testAcquireReleasePoolWithStrategy",
+        "mode" : "thrpt",
+        "threads" : 3,
+        "forks" : 5,
+        "jvm" : "/usr/lib/jvm/java-11-openjdk-11.0.10.0.9-0.el7_9.x86_64/bin/java",
+        "jvmArgs" : [
+        ],
+        "jdkVersion" : "11.0.10",
+        "vmName" : "OpenJDK 64-Bit Server VM",
+        "vmVersion" : "11.0.10+9-LTS",
+        "warmupIterations" : 3,
+        "warmupTime" : "10 s",
+        "warmupBatchSize" : 1,
+        "measurementIterations" : 3,
+        "measurementTime" : "10 s",
+        "measurementBatchSize" : 1,
+        "params" : {
+            "CACHE" : "true",
+            "POOL_TYPE" : "Pool.ThreadId",
+            "SIZE" : "4"
+        },
+        "primaryMetric" : {
+            "score" : 2.822410480733318E7,
+            "scoreError" : 1.7532905302240003E7,
+            "scoreConfidence" : [
+                1.0691199505093176E7,
+                4.5757010109573185E7
+            ],
+            "scorePercentiles" : {
+                "0.0" : 1.3491458896561034E7,
+                "50.0" : 1.6961352880362123E7,
+                "90.0" : 4.897130866515906E7,
+                "95.0" : 4.925854839948763E7,
+                "99.0" : 4.925854839948763E7,
+                "99.9" : 4.925854839948763E7,
+                "99.99" : 4.925854839948763E7,
+                "99.999" : 4.925854839948763E7,
+                "99.9999" : 4.925854839948763E7,
+                "100.0" : 4.925854839948763E7
+            },
+            "scoreUnit" : "ops/s",
+            "rawData" : [
+                [
+                    4.624423072533174E7,
+                    4.7778151291217044E7,
+                    4.610006035601613E7
+                ],
+                [
+                    1.4920342566285666E7,
+                    1.957954852347309E7,
+                    1.6961352880362123E7
+                ],
+                [
+                    1.5219582266653692E7,
+                    1.446268206957293E7,
+                    1.4538615325148767E7
+                ],
+                [
+                    1.3491458896561034E7,
+                    1.381852275472807E7,
+                    1.5160133460617179E7
+                ],
+                [
+                    4.704852708560255E7,
+                    4.925854839948763E7,
+                    4.877981550894002E7
+                ]
+            ]
+        },
+        "secondaryMetrics" : {
+        }
+    },
+    {
+        "jmhVersion" : "1.26",
+        "benchmark" : "org.eclipse.jetty.util.PoolStrategyBenchmark.testAcquireReleasePoolWithStrategy",
+        "mode" : "thrpt",
+        "threads" : 3,
+        "forks" : 5,
+        "jvm" : "/usr/lib/jvm/java-11-openjdk-11.0.10.0.9-0.el7_9.x86_64/bin/java",
+        "jvmArgs" : [
+        ],
+        "jdkVersion" : "11.0.10",
+        "vmName" : "OpenJDK 64-Bit Server VM",
+        "vmVersion" : "11.0.10+9-LTS",
+        "warmupIterations" : 3,
+        "warmupTime" : "10 s",
+        "warmupBatchSize" : 1,
+        "measurementIterations" : 3,
+        "measurementTime" : "10 s",
+        "measurementBatchSize" : 1,
+        "params" : {
+            "CACHE" : "true",
+            "POOL_TYPE" : "Pool.ThreadId",
+            "SIZE" : "16"
+        },
+        "primaryMetric" : {
+            "score" : 4.275979029092646E7,
+            "scoreError" : 895705.6615313223,
+            "scoreConfidence" : [
+                4.1864084629395135E7,
+                4.365549595245778E7
+            ],
+            "scorePercentiles" : {
+                "0.0" : 4.111096121226746E7,
+                "50.0" : 4.307472357103321E7,
+                "90.0" : 4.361686385818118E7,
+                "95.0" : 4.37660491372107E7,
+                "99.0" : 4.37660491372107E7,
+                "99.9" : 4.37660491372107E7,
+                "99.99" : 4.37660491372107E7,
+                "99.999" : 4.37660491372107E7,
+                "99.9999" : 4.37660491372107E7,
+                "100.0" : 4.37660491372107E7
+            },
+            "scoreUnit" : "ops/s",
+            "rawData" : [
+                [
+                    4.318025486257802E7,
+                    4.37660491372107E7,
+                    4.176216203925984E7
+                ],
+                [
+                    4.3257580987753585E7,
+                    4.3363470281727076E7,
+                    4.3474681655414455E7
+                ],
+                [
+                    4.320029936067665E7,
+                    4.307472357103321E7,
+                    4.351740700549483E7
+                ],
+                [
+                    4.257556372255193E7,
+                    4.266990330272579E7,
+                    4.115408925497601E7
+                ],
+                [
+                    4.3023849920924306E7,
+                    4.226585804930307E7,
+                    4.111096121226746E7
+                ]
+            ]
+        },
+        "secondaryMetrics" : {
+        }
+    }
+]
+
+
