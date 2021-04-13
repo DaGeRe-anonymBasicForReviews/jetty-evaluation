@@ -27,15 +27,16 @@ public class JmhReader {
          List<String> paramValues = getParams(benchmarkMethod);
          results.add(new JmhBenchmarkValues(paramValues, summary));
       }
-      System.out.println(benchmarks.getClass());
       return results;
    }
 
    private static List<String> getParams(final JsonNode benchmarkMethod) {
       ObjectNode params = (ObjectNode) benchmarkMethod.get("params");
       List<String> paramValues = new LinkedList<>();
-      for (JsonNode value : params) {
-         paramValues.add(value.asText());
+      if (params != null) {
+         for (JsonNode value : params) {
+            paramValues.add(value.asText());
+         }
       }
       return paramValues;
    }

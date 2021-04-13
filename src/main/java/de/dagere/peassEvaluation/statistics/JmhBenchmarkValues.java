@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.apache.commons.math3.stat.descriptive.StatisticalSummary;
 
-class JmhBenchmarkValues {
+public class JmhBenchmarkValues {
    private final List<String> params;
    private final StatisticalSummary statistics;
 
