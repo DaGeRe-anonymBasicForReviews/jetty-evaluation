@@ -3,18 +3,14 @@
 
 name: Java CI with Maven
 
-on:
-  push:
-    branches: [ buildOnWindowsAndMac ]
-  workflow_dispatch:
-    branches: [ buildOnWindowsAndMac ]
+on: [push, workflow_dispatch ]
 
 jobs:
   build:
     strategy: 
         matrix:
-          os: [macOS-latest]
-          java: [ 11 ]
+          os: [ubuntu-latest, windows-latest, macos-latest]
+          java: [ 11, 15 ]
         fail-fast: false
     runs-on: ${{ matrix.os }}
     name: Java ${{ matrix.java }} OS ${{ matrix.os }} sample
@@ -30,11 +26,21 @@ jobs:
         path: ~/.m2
         key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
         restore-keys: ${{ runner.os }}-m2
-    - name: Build on macOS
-      if: startsWith(matrix.os,'macOS')
+    - name: Build on Ubuntu
+      if: startsWith(matrix.os,'ubuntu')
       run: |
-        FOLDER=$(pwd) && echo $FOLDER && ls
-        mvn -version
-        echo $PATH
+        BASE_DIRECTORY=$(pwd)
         cd $HOME && git clone https://github.com/DaGeRe/peass.git && cd peass && mvn clean install -DskipTests
-        cd $FOLDER && mvn -B package --file pom.yaml
+        cd $BASE_DIRECTORY && mvn -B package --file pom.yaml
+    - name: Build on Windows
+      if: startsWith(matrix.os,'windows')
+      run: |
+        git config --system core.longpaths true
+        cd "C:\Program Files" && git clone https://github.com/DaGeRe/peass.git && cd peass && mvn clean install -DskipTests
+        cd "D:\a\jetty-evaluation\jetty-evaluation" && mvn -B package --file pom.yaml
+    - name: Build on macOS
+      if: startsWith(matrix.os,'macos')
+      run: |
+        BASE_DIRECTORY=$(pwd)
+        cd $HOME && git clone https://github.com/DaGeRe/peass.git && cd peass && mvn clean install -DskipTests
+        cd $BASE_DIRECTORY && mvn -B package --file pom.yaml
