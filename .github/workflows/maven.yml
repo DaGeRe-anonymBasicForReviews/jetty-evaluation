@@ -34,8 +34,5 @@ jobs:
       if: startsWith(matrix.os,'windows')
       run: |
         git config --system core.longpaths true
-        dir
-        $Env:Path
-        mvn -version
-        cd "C:\Program Files" && dir && git clone https://github.com/DaGeRe/peass.git && cd peass && mvn clean install -DskipTests
+        cd "C:\Program Files" && git clone https://github.com/DaGeRe/peass.git && cd peass && mvn clean install -DskipTests
         cd "D:\a\jetty-evaluation\jetty-evaluation" && mvn -B package --file pom.yaml
