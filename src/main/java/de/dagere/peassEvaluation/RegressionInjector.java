@@ -37,6 +37,7 @@ public class RegressionInjector implements Callable<Void> {
 
       File treeFolder = new File(dataFolder, "trees");
       File[] trees = treeFolder.listFiles();
+      System.out.println("Trees: " + trees.length);
       try (FileWriter benchmarkNameWriter = new FileWriter(new File(dataFolder, "regressions.csv"))) {
          for (int regressionIndex = 0; regressionIndex < count; regressionIndex++) {
             new RegressionBranchGenerator(projectFolder).createRegressionBranch(trees, benchmarkNameWriter, regressionIndex);

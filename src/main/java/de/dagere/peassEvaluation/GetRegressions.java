@@ -1,7 +1,10 @@
 package de.dagere.peassEvaluation;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.Callable;
 
@@ -29,18 +32,34 @@ public class GetRegressions implements Callable<Void> {
          t.printStackTrace();
       }
    }
+   
+   List<Integer> minimalIterationsForChange = new LinkedList<>();
 
    @Override
    public Void call() throws Exception {
       for (File regressionFolder : dataFolder.listFiles()) {
-         if (regressionFolder.isDirectory()) {
+         if (regressionFolder.isDirectory() && regressionFolder.getName().startsWith("regression-")) {
             readRegression(regressionFolder);
+         }
+      }
+
+      File regressionFile = new File(dataFolder, "regressions.csv");
+      try (BufferedWriter writer = new BufferedWriter(new FileWriter(regressionFile))){
+         int count = 0;
+         for (int i = 0; i < 100; i++) {
+            writer.write(i + " ");
+            for (Integer val : minimalIterationsForChange) {
+               if (val == i) {
+                  count++;
+               }
+            }
+            writer.write(count + "\n");
          }
       }
       return null;
    }
 
-   private void readRegression(File regressionFolder) throws JsonProcessingException, IOException {
+   private void readRegression(final File regressionFolder) throws JsonProcessingException, IOException {
       System.out.print("Reading " + regressionFolder.getName() + " ");
       List<JmhBenchmarkValues> basicValues = JmhReader.getValues(new File(regressionFolder, "basic.json"));
       List<JmhBenchmarkValues> regressionValues = JmhReader.getValues(new File(regressionFolder, regressionFolder.getName() + ".json"));
@@ -72,9 +91,10 @@ public class GetRegressions implements Callable<Void> {
          }
       }
       System.out.println(changeError);
+      minimalIterationsForChange.add(changeError);
    }
 
-   private int findMinimalChangeIterations(int changeError, JmhBenchmarkValues basicValue, JmhBenchmarkValues regressionValue) {
+   private int findMinimalChangeIterations(int changeError, final JmhBenchmarkValues basicValue, final JmhBenchmarkValues regressionValue) {
       for (int i = 3; i < 100; i++) {
          StatisticalSummary basic = new StatisticalSummaryValues(basicValue.getStatistics().getMean(), 
                basicValue.getStatistics().getVariance(),

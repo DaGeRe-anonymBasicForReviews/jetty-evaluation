@@ -8,7 +8,9 @@ import java.nio.file.Files;
 
 import com.github.javaparser.JavaParser;
 import com.github.javaparser.ast.CompilationUnit;
+import com.github.javaparser.ast.Modifier.Keyword;
 import com.github.javaparser.ast.body.CallableDeclaration;
+import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
 import com.github.javaparser.ast.body.ConstructorDeclaration;
 import com.github.javaparser.ast.body.MethodDeclaration;
 import com.github.javaparser.ast.stmt.BlockStmt;
@@ -16,6 +18,7 @@ import com.github.javaparser.ast.stmt.Statement;
 
 import de.peass.dependency.ClazzFileFinder;
 import de.peass.dependency.analysis.data.ChangedEntity;
+import de.peass.dependency.changesreading.ClazzFinder;
 import de.peass.dependency.changesreading.JavaParserProvider;
 import de.peass.dependency.traces.TraceReadUtils;
 import de.peass.dependency.traces.requitur.content.TraceElementContent;
@@ -45,7 +48,11 @@ public class CodeRegressionCreator {
             insertToMethod(callable, busyWait);
          } else if (callable instanceof ConstructorDeclaration) {
             insertToConstructor(callable, busyWait);
-         } else {
+         } else if (callable == null && entity.getMethod().equals("<init>")) {
+            ClassOrInterfaceDeclaration clazz = ClazzFinder.findClazz(entity, unit.getChildNodes());
+            ConstructorDeclaration constructor = clazz.addConstructor(Keyword.PUBLIC);
+            constructor.getBody().addStatement(busyWait);
+         } else {   
             throw new RuntimeException("Method " + entity.getMethod() + " " + entity.getParametersPrintable() + " not found in " + entity.getClazz() + " " + callable);
          }
          Files.write(clazzFile.toPath(), unit.toString().getBytes(Charset.defaultCharset()));
