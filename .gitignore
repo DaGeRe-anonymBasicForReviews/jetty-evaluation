@@ -1,6 +1,7 @@
 .classpath
 .project
 .settings/
+pom.xml
 dependency-reduced-pom.xml
 target/
 
