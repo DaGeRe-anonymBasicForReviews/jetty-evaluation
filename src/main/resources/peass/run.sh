@@ -1,3 +1,12 @@
+#!/bin/bash
+
+# For ubuntu usage, insert to /etc/sysctl.conf
+#net.ipv4.tcp_tw_reuse = 1
+#net.ipv4.tcp_fin_timeout = 10
+#net.ipv4.tcp_keepalive_time = 10
+
+# and call sudo sysctl -p /etc/sysctl.conf 
+
 # git clone https://github.com/DaGeRe/jetty-experiments.git jetty.project
 # cd jetty.project/ && git checkout regression-0 && cd ..
 
