@@ -1,3 +1,5 @@
+# git clone https://github.com/DaGeRe/jetty-experiments.git jetty.project
+# cd jetty.project/ && git checkout regression-0 && cd ..
 
 cd jetty.project
 version=$(git rev-parse HEAD)
