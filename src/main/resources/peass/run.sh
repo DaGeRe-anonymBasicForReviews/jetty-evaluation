@@ -21,15 +21,22 @@ do
 	java -cp $PEASS_PROJECT/distribution/target/peass-distribution-0.1-SNAPSHOT.jar de.peass.debugtools.DependencyReadingContinueStarter \
 		-dependencyfile deps_jetty.project.json -folder jetty.project/ -doNotUpdateDependencies &> dependencylog.txt
 
-	echo "Measuring"
+	testcaseName=$(cat results/deps_jetty.project.json | jq ".versions.$version.changedClazzes" \
+		| grep testcases -A 2 \
+		| tail -n 2 | tr -d "\":[, ")
+	testName=$(echo $testcaseName | awk -F'§' '{print $2}' | tr " " "#")
+
+	echo "Measuring $testName"
 	java -cp $PEASS_PROJECT/distribution/target/peass-distribution-0.1-SNAPSHOT.jar de.peass.DependencyTestStarter \
 		-dependencyfile results/deps_jetty.project.json -folder jetty.project/ \
-		-iterations 5 \
-		-repetitions 1000 \
-		-vms 200 \
-		-timeout 3 \
+		-iterations 10 \
+		-warmup 0
+		-repetitions 10000 \
+		-vms 100 \
+		-timeout 5 \
 		-measurementStrategy PARALLEL \
-		-version $version -pl ":jetty-jmh" &> measurelog.txt
+		-version $version -pl ":jetty-jmh" \
+		-test $testName	&> measurelog.txt
 	
 	mv jetty.project_fullPeass regression-$i
 	mv measurelog.txt regression-$i
