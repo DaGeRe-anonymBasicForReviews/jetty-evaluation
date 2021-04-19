@@ -30,7 +30,7 @@ do
 	java -cp $PEASS_PROJECT/distribution/target/peass-distribution-0.1-SNAPSHOT.jar de.peass.DependencyTestStarter \
 		-dependencyfile results/deps_jetty.project.json -folder jetty.project/ \
 		-iterations 10 \
-		-warmup 0
+		-warmup 0 \
 		-repetitions 10000 \
 		-vms 100 \
 		-timeout 5 \
