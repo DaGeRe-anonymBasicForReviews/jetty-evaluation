@@ -4,4 +4,9 @@
 pom.xml
 dependency-reduced-pom.xml
 target/
-
+src/main/resources/peass/dependencylog.txt
+src/main/resources/peass/jetty.project/
+src/main/resources/peass/jetty.project_peass/
+src/main/resources/peass/results/
+src/main/regression-*
+src/main/resources/peass/test.txt

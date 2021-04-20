@@ -7,7 +7,7 @@
 # and call sudo sysctl -p /etc/sysctl.conf 
 
 
-git clone https://github.com/DaGeRe/jetty-experiments.git jetty.project
+git clone git@github.com:DaGeRe/jetty-experiments.git jetty.project
 
 for i in {1..10}
 do
@@ -21,11 +21,12 @@ do
 	java -cp $PEASS_PROJECT/distribution/target/peass-distribution-0.1-SNAPSHOT.jar de.peass.debugtools.DependencyReadingContinueStarter \
 		-dependencyfile deps_jetty.project.json -folder jetty.project/ -doNotUpdateDependencies &> dependencylog.txt
 
-	testcaseName=$(cat results/deps_jetty.project.json | jq ".versions.$version.changedClazzes" \
-		| grep testcases -A 2 \
-		| tail -n 2 | tr -d "\":[, ")
-	testName=$(echo $testcaseName | awk -F'§' '{print $2}' | tr " " "#")
+	java -cp ../../../../target/jetty-evaluation-0.1-SNAPSHOT.jar \
+		de.dagere.peassEvaluation.SelectTest \
+		-dependencyfile results/deps_jetty.project.json \
+		-folder jetty.project/ &> randomselection.txt
 
+	testName=$(cat test.txt)
 	echo "Measuring $testName"
 	java -cp $PEASS_PROJECT/distribution/target/peass-distribution-0.1-SNAPSHOT.jar de.peass.DependencyTestStarter \
 		-dependencyfile results/deps_jetty.project.json -folder jetty.project/ \
