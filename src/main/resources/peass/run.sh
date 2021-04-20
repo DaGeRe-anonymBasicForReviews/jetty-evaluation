@@ -7,7 +7,10 @@
 # and call sudo sysctl -p /etc/sysctl.conf 
 
 
-git clone git@github.com:DaGeRe/jetty-experiments.git jetty.project
+if [ ! -d jetty.project ]
+then
+	git clone git@github.com:DaGeRe/jetty-experiments.git jetty.project
+fi
 
 for i in {1..10}
 do
