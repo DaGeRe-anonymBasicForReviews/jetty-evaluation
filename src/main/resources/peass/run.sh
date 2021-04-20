@@ -10,6 +10,8 @@
 if [ ! -d jetty.project ]
 then
 	git clone git@github.com:DaGeRe/jetty-experiments.git jetty.project
+else
+	cd jetty.project && git reset --hard && cd ..
 fi
 
 for i in {1..10}
