@@ -38,7 +38,7 @@ do
 		-version $version -pl ":jetty-jmh" \
 		-test $testName	&> measurelog.txt
 	
-	mv jetty.project_fullPeass regression-$i
+	mv jetty.project_peass regression-$i
 	mv measurelog.txt regression-$i
 	mv dependencylog.txt regression-$i
 done
