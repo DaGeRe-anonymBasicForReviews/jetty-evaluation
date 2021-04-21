@@ -22,7 +22,7 @@ do
         git checkout regression-$i
         cd ..
 
-	cp $start/dependencies.json deps_jetty.project.json
+	cp $start/deps_jetty.project.json deps_jetty.project.json
 
 	java -cp $PEASS_PROJECT/distribution/target/peass-distribution-0.1-SNAPSHOT.jar de.peass.debugtools.DependencyReadingContinueStarter \
                 -dependencyfile deps_jetty.project.json -folder jetty.project/ -doNotUpdateDependencies &> dependencylog.txt
