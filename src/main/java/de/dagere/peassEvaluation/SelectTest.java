@@ -5,10 +5,12 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Random;
 import java.util.concurrent.Callable;
+
+import org.apache.commons.lang3.StringUtils;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -29,6 +31,28 @@ import de.peass.utils.Constants;
 import picocli.CommandLine;
 import picocli.CommandLine.Option;
 
+class TestProperties {
+   TestCase test;
+   int occurences;
+   int length;
+   double coefficient;
+
+   public TestProperties(final TestCase test, final int occurences, final int length, final double coefficient) {
+      this.test = test;
+      this.occurences = occurences;
+      this.length = length;
+      this.coefficient = coefficient;
+   }
+
+   public double getCoefficient() {
+      return coefficient;
+   }
+
+   public TestCase getTest() {
+      return test;
+   }
+}
+
 public class SelectTest implements Callable<Void> {
 
    @Option(names = { "-folder", "--folder" }, description = "Folder of the project that should be analyzed", required = true)
@@ -36,6 +60,12 @@ public class SelectTest implements Callable<Void> {
 
    @Option(names = { "-dependencyfile", "--dependencyfile" }, description = "Path to the dependencyfile")
    File dependencyFile;
+
+   @Option(names = { "-tracesFolder", "--tracesFolder" }, description = "Path to the current traces folder", required = true)
+   File tracesFolder;
+
+   @Option(names = { "-method", "--method" }, description = "Method that contains the regression", required = true)
+   String method;
 
    public static void main(final String[] args) throws JsonParseException, JsonMappingException, IOException {
       final SelectTest command = new SelectTest();
@@ -54,17 +84,49 @@ public class SelectTest implements Callable<Void> {
 
       List<TestCase> withoutSleepTests = selectWithoutSleepTests(tests);
 
-      int selectedIndex = new Random().nextInt(withoutSleepTests.size());
-      
-      TestCase tc = withoutSleepTests.get(selectedIndex);
-      System.out.println(tc.getModule() + ChangedEntity.MODULE_SEPARATOR + tc.getClazz() + ChangedEntity.METHOD_SEPARATOR + tc.getMethod());
-      
-      try (BufferedWriter writer = new BufferedWriter(new FileWriter(new File("test.txt")))){
-         writer.write(tc.getModule() + ChangedEntity.MODULE_SEPARATOR + tc.getClazz() + ChangedEntity.METHOD_SEPARATOR + tc.getMethod());
+      TestProperties selectedTest = selectTestBasedOnTraces(newestVersion, withoutSleepTests);
+
+      // int selectedIndex = new Random().nextInt(withoutSleepTests.size());
+      //
+      // TestCase tc = withoutSleepTests.get(selectedIndex);
+      // System.out.println(tc.getModule() + ChangedEntity.MODULE_SEPARATOR + tc.getClazz() + ChangedEntity.METHOD_SEPARATOR + tc.getMethod());
+      //
+      writeTest(selectedTest.getTest());
+
+      return null;
+   }
+
+   private void writeTest(final TestCase finalTest) throws IOException {
+      try (BufferedWriter writer = new BufferedWriter(new FileWriter(new File("test.txt")))) {
+         writer.write(finalTest.getModule() + ChangedEntity.MODULE_SEPARATOR +
+               finalTest.getClazz() + ChangedEntity.METHOD_SEPARATOR +
+               finalTest.getMethod());
          writer.flush();
       }
-      
-      return null;
+   }
+
+   private TestProperties selectTestBasedOnTraces(final String newestVersion, final List<TestCase> withoutSleepTests) throws IOException {
+      TestProperties selectedTest = null;
+
+      File parentFolder = new File(tracesFolder, "views_jetty.project" + File.separator + "view_" + newestVersion);
+      for (TestCase test : withoutSleepTests) {
+         String fileName = test.getModule() + ChangedEntity.MODULE_SEPARATOR + test.getClazz();
+         File testFolder = new File(parentFolder, fileName);
+         File methodFolder = new File(testFolder, test.getMethod());
+
+         File traceFile = new File(methodFolder, newestVersion.substring(0, 6));
+         String content = Files.readString(traceFile.toPath());
+
+         int occurences = StringUtils.countMatches(content, method);
+         int length = StringUtils.countMatches(content, "\n");
+         double coefficient = ((double) length) / occurences;
+         System.out.println("Test: " + test.toString() + " " + occurences + " " + length + " " + coefficient);
+         if (selectedTest == null || coefficient < selectedTest.coefficient) {
+            selectedTest = new TestProperties(test, occurences, length, coefficient);
+         }
+      }
+      System.out.println("Finally selected: " + selectedTest.getTest());
+      return selectedTest;
    }
 
    private List<TestCase> selectWithoutSleepTests(final TestSet tests) throws FileNotFoundException {
