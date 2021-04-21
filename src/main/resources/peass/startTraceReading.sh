@@ -3,6 +3,9 @@ start=$(pwd)
 if [ ! -d jetty.project ]
 then
 	git clone git@github.com:DaGeRe/jetty-experiments.git jetty.project
+	cd jetty.project
+	for i in {0..999}; do git checkout $branch; done
+	cd ..
 else
 	cd jetty.project && git reset --hard && cd ..
 fi
