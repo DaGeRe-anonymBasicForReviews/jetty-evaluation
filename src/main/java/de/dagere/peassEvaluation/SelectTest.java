@@ -11,6 +11,8 @@ import java.util.List;
 import java.util.concurrent.Callable;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -54,6 +56,8 @@ class TestProperties {
 }
 
 public class SelectTest implements Callable<Void> {
+
+   private static final Logger LOG = LogManager.getLogger(SelectTest.class);
 
    @Option(names = { "-folder", "--folder" }, description = "Folder of the project that should be analyzed", required = true)
    File projectFolder;
@@ -115,16 +119,21 @@ public class SelectTest implements Callable<Void> {
          File methodFolder = new File(testFolder, test.getMethod());
 
          File traceFile = new File(methodFolder, newestVersion.substring(0, 6) + "_method_expanded");
-         
-         String content = Files.readString(traceFile.toPath());
 
-         int occurences = StringUtils.countMatches(content, method);
-         int length = StringUtils.countMatches(content, "\n");
-         double coefficient = ((double) length) / occurences;
-         System.out.println("Test: " + test.toString() + " " + occurences + " " + length + " " + coefficient);
-         if (selectedTest == null || coefficient < selectedTest.coefficient) {
-            selectedTest = new TestProperties(test, occurences, length, coefficient);
+         if (traceFile.exists()) {
+            String content = Files.readString(traceFile.toPath());
+
+            int occurences = StringUtils.countMatches(content, method);
+            int length = StringUtils.countMatches(content, "\n");
+            double coefficient = ((double) length) / occurences;
+            System.out.println("Test: " + test.toString() + " " + occurences + " " + length + " " + coefficient);
+            if (selectedTest == null || coefficient < selectedTest.coefficient) {
+               selectedTest = new TestProperties(test, occurences, length, coefficient);
+            }
+         } else {
+            LOG.info("Did not analyze tracefile {} since it did not exist", traceFile);
          }
+
       }
       System.out.println("Finally selected: " + selectedTest.getTest());
       return selectedTest;
