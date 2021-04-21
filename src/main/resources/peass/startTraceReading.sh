@@ -27,12 +27,7 @@ do
 	java -cp $PEASS_PROJECT/distribution/target/peass-distribution-0.1-SNAPSHOT.jar de.peass.debugtools.DependencyReadingContinueStarter \
                 -dependencyfile deps_jetty.project.json -folder jetty.project/ -doNotUpdateDependencies &> dependencylog.txt
 
-	# Using the Peass ViewGenerator at this point is not fast, since it
-	# - always reads the traces of both versions, 
-	# - reads all called methods and 
-	# - compacts the traces,
-	# which is all not required here. 
-	java -cp $PEASS_PROJECT/distribution/target/peass-distribution-0.1-SNAPSHOT.jar de.peass.dependency.traces.ViewGenerator \
+	java -cp $PEASS_PROJECT/distribution/target/peass-distribution-0.1-SNAPSHOT.jar de.peass.dependency.traces.TraceGeneratorStarter \
 		-dependencyfile results/deps_jetty.project.json -pl ":jetty-jmh" \
 		-folder jetty.project &> log.txt &
 done
