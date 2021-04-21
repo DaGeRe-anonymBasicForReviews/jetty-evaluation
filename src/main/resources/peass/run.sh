@@ -14,6 +14,11 @@ else
 	cd jetty.project && git reset --hard && cd ..
 fi
 
+if [ ! -d jetty-traces ]
+then
+	git clone git@github.com:DaGeRe/jetty-traces.git
+fi
+
 for i in {1..10}
 do
 	cd jetty.project/ && git checkout regression-$i && cd ..
@@ -26,9 +31,13 @@ do
 	java -cp $PEASS_PROJECT/distribution/target/peass-distribution-0.1-SNAPSHOT.jar de.peass.debugtools.DependencyReadingContinueStarter \
 		-dependencyfile deps_jetty.project.json -folder jetty.project/ -doNotUpdateDependencies &> dependencylog.txt
 
+	method=$(cat ../regressions.csv | grep "regression-$i;" | awk -F';' '{print $3}')
+
 	java -cp ../../../../target/jetty-evaluation-0.1-SNAPSHOT.jar \
 		de.dagere.peassEvaluation.SelectTest \
 		-dependencyfile results/deps_jetty.project.json \
+		-tracesFolder jetty-traces/regression-$i/results/ \
+		-method $method \
 		-folder jetty.project/ &> randomselection.txt
 
 	testName=$(cat test.txt)
