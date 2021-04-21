@@ -31,6 +31,6 @@ build:
       priority: 0
   resources:
   - directory: src/main/resources
-    excludes: [peass/jetty.project]
+    excludes: [peass/**]
     filtering: false
 childProjectUrlInheritAppendPath: true
