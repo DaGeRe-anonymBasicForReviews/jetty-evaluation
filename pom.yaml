@@ -29,4 +29,8 @@ build:
       inherited: true
       phase: package
       priority: 0
+  resources:
+  - directory: src/main/resources
+    excludes: [peass/jetty.project]
+    filtering: false
 childProjectUrlInheritAppendPath: true
