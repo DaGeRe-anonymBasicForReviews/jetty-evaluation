@@ -114,7 +114,8 @@ public class SelectTest implements Callable<Void> {
          File testFolder = new File(parentFolder, fileName);
          File methodFolder = new File(testFolder, test.getMethod());
 
-         File traceFile = new File(methodFolder, newestVersion.substring(0, 6));
+         File traceFile = new File(methodFolder, newestVersion.substring(0, 6) + "_method_expanded");
+         
          String content = Files.readString(traceFile.toPath());
 
          int occurences = StringUtils.countMatches(content, method);
