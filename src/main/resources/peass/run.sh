@@ -6,6 +6,13 @@
 #net.ipv4.tcp_keepalive_time = 10
 # and call sudo sysctl -p /etc/sysctl.conf 
 
+# This script needs gawk to work (mawk does not work!)
+hasgawk=$(awk 2>&1 | grep gawk)
+if [ -z "$hasgawk" ]
+then
+	echo "No or wrong awk - please install gawk!"
+	exit 1
+fi
 
 if [ ! -d jetty.project ]
 then
