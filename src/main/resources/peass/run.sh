@@ -42,13 +42,23 @@ do
 		-method $method \
 		-folder jetty.project/ &> randomselection.txt
 
+        methodName=$(cat test.txt | awk -F '#' '{print $2}')
+        clazzName=$(cat test.txt | awk -F '[§#]' '{print $2}')
+	calls=$(cat randomselection.txt | grep "Test: TestCase " | uniq | grep $clazzName | grep $methodName | awk '{print $(NF-1)}')
+
+	if [ $calls -gt 1000 ]
+	then
+		repetitions=10000
+	else
+		repetitions=1000000
+	fi
 	testName=$(cat test.txt)
-	echo "Measuring $testName"
+	echo "Measuring $testName Calls: $calls Repetitions: $repetitions"
 	java -cp $PEASS_PROJECT/distribution/target/peass-distribution-0.1-SNAPSHOT.jar de.peass.DependencyTestStarter \
 		-dependencyfile results/deps_jetty.project.json -folder jetty.project/ \
 		-iterations 10 \
 		-warmup 0 \
-		-repetitions 10000 \
+		-repetitions $repetitions \
 		-vms 100 \
 		-timeout 5 \
 		-measurementStrategy PARALLEL \
