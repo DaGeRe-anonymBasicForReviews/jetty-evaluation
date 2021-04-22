@@ -17,6 +17,8 @@ fi
 if [ ! -d jetty-traces ]
 then
 	git clone git@github.com:DaGeRe/jetty-traces.git
+else
+	cd jetty-traces && git pull && cd ..
 fi
 
 for i in {1..10}

@@ -133,7 +133,6 @@ public class SelectTest implements Callable<Void> {
          } else {
             LOG.info("Did not analyze tracefile {} since it did not exist", traceFile);
          }
-
       }
       System.out.println("Finally selected: " + selectedTest.getTest());
       return selectedTest;
