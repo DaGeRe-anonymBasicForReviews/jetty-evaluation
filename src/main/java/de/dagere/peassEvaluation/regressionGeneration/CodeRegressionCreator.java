@@ -16,12 +16,12 @@ import com.github.javaparser.ast.body.MethodDeclaration;
 import com.github.javaparser.ast.stmt.BlockStmt;
 import com.github.javaparser.ast.stmt.Statement;
 
-import de.peass.dependency.ClazzFileFinder;
-import de.peass.dependency.analysis.data.ChangedEntity;
-import de.peass.dependency.changesreading.ClazzFinder;
-import de.peass.dependency.changesreading.JavaParserProvider;
-import de.peass.dependency.traces.TraceReadUtils;
-import de.peass.dependency.traces.requitur.content.TraceElementContent;
+import de.dagere.peass.dependency.ClazzFileFinder;
+import de.dagere.peass.dependency.analysis.data.ChangedEntity;
+import de.dagere.peass.dependency.changesreading.ClazzFinder;
+import de.dagere.peass.dependency.changesreading.JavaParserProvider;
+import de.dagere.peass.dependency.traces.TraceReadUtils;
+import de.dagere.peass.dependency.traces.requitur.content.TraceElementContent;
 
 public class CodeRegressionCreator {
    private final File projectFolder;

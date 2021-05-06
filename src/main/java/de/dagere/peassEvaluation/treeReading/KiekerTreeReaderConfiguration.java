@@ -2,8 +2,8 @@ package de.dagere.peassEvaluation.treeReading;
 
 import java.io.File;
 
-import de.peass.dependency.analysis.KiekerReaderConfiguration;
-import de.peass.dependency.analysis.ModuleClassMapping;
+import de.dagere.peass.dependency.analysis.KiekerReaderConfiguration;
+import de.dagere.peass.dependency.analysis.ModuleClassMapping;
 import kieker.analysis.trace.reconstruction.TraceReconstructionStage;
 
 public class KiekerTreeReaderConfiguration extends KiekerReaderConfiguration {

@@ -20,16 +20,16 @@ import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
 import com.github.javaparser.ast.body.MethodDeclaration;
 
-import de.peass.dependency.ClazzFileFinder;
-import de.peass.dependency.analysis.data.ChangedEntity;
-import de.peass.dependency.analysis.data.TestCase;
-import de.peass.dependency.analysis.data.TestSet;
-import de.peass.dependency.changesreading.ClazzFinder;
-import de.peass.dependency.changesreading.JavaParserProvider;
-import de.peass.dependency.persistence.Dependencies;
-import de.peass.dependency.persistence.Version;
-import de.peass.testtransformation.TestMethodFinder;
-import de.peass.utils.Constants;
+import de.dagere.peass.dependency.ClazzFileFinder;
+import de.dagere.peass.dependency.analysis.data.ChangedEntity;
+import de.dagere.peass.dependency.analysis.data.TestCase;
+import de.dagere.peass.dependency.analysis.data.TestSet;
+import de.dagere.peass.dependency.changesreading.ClazzFinder;
+import de.dagere.peass.dependency.changesreading.JavaParserProvider;
+import de.dagere.peass.dependency.persistence.Dependencies;
+import de.dagere.peass.dependency.persistence.Version;
+import de.dagere.peass.testtransformation.TestMethodFinder;
+import de.dagere.peass.utils.Constants;
 import picocli.CommandLine;
 import picocli.CommandLine.Option;
 

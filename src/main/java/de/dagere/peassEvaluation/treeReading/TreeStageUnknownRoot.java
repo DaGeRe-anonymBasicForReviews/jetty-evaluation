@@ -3,10 +3,10 @@ package de.dagere.peassEvaluation.treeReading;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import de.peass.dependency.ClazzFileFinder;
-import de.peass.dependency.analysis.ModuleClassMapping;
-import de.peass.measurement.rca.data.CallTreeNode;
-import de.peass.measurement.rca.kieker.KiekerPatternConverter;
+import de.dagere.peass.dependency.ClazzFileFinder;
+import de.dagere.peass.dependency.analysis.ModuleClassMapping;
+import de.dagere.peass.measurement.rca.data.CallTreeNode;
+import de.dagere.peass.measurement.rca.kieker.KiekerPatternConverter;
 import kieker.analysis.trace.AbstractTraceProcessingStage;
 import kieker.model.repository.SystemModelRepository;
 import kieker.model.system.model.Execution;

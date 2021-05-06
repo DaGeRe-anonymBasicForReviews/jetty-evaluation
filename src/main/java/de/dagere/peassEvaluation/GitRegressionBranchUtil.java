@@ -3,7 +3,7 @@ package de.dagere.peassEvaluation;
 import java.io.File;
 import java.io.IOException;
 
-import de.peass.utils.StreamGobbler;
+import de.dagere.peass.utils.StreamGobbler;
 
 public class GitRegressionBranchUtil {
    
