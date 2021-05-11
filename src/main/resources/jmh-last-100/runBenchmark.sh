@@ -9,7 +9,7 @@ export PATH=/nfs/user/do820mize/maven/apache-maven-3.6.3/bin:/usr/lib/jvm/java-1
 echo "Executing $version"
 
 startFolder=$(pwd)
-resultFolder=$startFolder/peass-evaluation-jetty-results
+resultFolder=$startFolder/peass-jmh-jetty-results
 mkdir -p $resultFolder
 echo "Final results go to $resultFolder"
 
@@ -29,9 +29,18 @@ git checkout $version
 mvn -V -B clean package \
         -DskipTests -Dlicense.skip -Denforcer.skip -Dcheckstyle.skip -Djacoco.skip \
          -T6 -e -pl :jetty-jmh -am
-java -jar tests/jetty-jmh/target/benchmarks.jar \
+if [ -f tests/jetty-jmh/target/benchmarks.jar ]
+then
+	jarfile="tests/jetty-jmh/target/benchmarks.jar"
+else
+	jarfile="jetty-jmh/target/benchmarks.jar"
+fi
+
+echo "Executing $jarfile"
+
+java -jar $jarfile \
         -rff jmh_results/$version.json -rf json \
-         -i 3 -t 3 -wi 3
+         -i 5 -t 3 -wi 5 -f 10 -e org.eclipse.jetty.util.TrieBenchmark.*
          
 mv $experimentFolder $resultFolder
 
