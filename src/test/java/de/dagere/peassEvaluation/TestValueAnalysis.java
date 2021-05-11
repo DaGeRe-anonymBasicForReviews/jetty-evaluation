@@ -3,6 +3,7 @@ package de.dagere.peassEvaluation;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
@@ -16,7 +17,9 @@ public class TestValueAnalysis {
 
    @Test
    public void readBasicValues() throws JsonProcessingException, IOException {
-      List<JmhBenchmarkValues> statistics = JmhReader.getValues(new File("src/test/resources/example-measurement-values/basic.json"));
+      File inputFile = new File("src/test/resources/example-measurement-values/basic.json");
+      Map<String, List<JmhBenchmarkValues>> benchmarkValues = JmhReader.getBenchmarkValues(inputFile);
+      List<JmhBenchmarkValues> statistics = benchmarkValues.get("org.eclipse.jetty.util.PoolStrategyBenchmark.testAcquireReleasePoolWithStrategy");
       Assert.assertEquals(8897841.621005083, statistics.get(0).getStatistics().getMean(), 0.001);
       Assert.assertEquals(754202.2898317131, statistics.get(0).getStatistics().getStandardDeviation(), 0.001);
 
@@ -26,7 +29,9 @@ public class TestValueAnalysis {
 
    @Test
    public void readRegressionValues() throws JsonProcessingException, IOException {
-      List<JmhBenchmarkValues> statistics = JmhReader.getValues(new File("src/test/resources/example-measurement-values/regression-0.json"));
+      File inputFile = new File("src/test/resources/example-measurement-values/regression-0.json");
+      Map<String, List<JmhBenchmarkValues>> benchmarkValues = JmhReader.getBenchmarkValues(inputFile);
+      List<JmhBenchmarkValues> statistics = benchmarkValues.get("org.eclipse.jetty.util.PoolStrategyBenchmark.testAcquireReleasePoolWithStrategy");
       Assert.assertEquals(9202941.630909853, statistics.get(0).getStatistics().getMean(), 0.001);
       Assert.assertEquals(724845.1722929896, statistics.get(0).getStatistics().getStandardDeviation(), 0.001);
 
