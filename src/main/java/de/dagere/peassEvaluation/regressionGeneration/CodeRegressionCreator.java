@@ -10,9 +10,9 @@ import com.github.javaparser.JavaParser;
 import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.Modifier.Keyword;
 import com.github.javaparser.ast.body.CallableDeclaration;
-import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
 import com.github.javaparser.ast.body.ConstructorDeclaration;
 import com.github.javaparser.ast.body.MethodDeclaration;
+import com.github.javaparser.ast.body.TypeDeclaration;
 import com.github.javaparser.ast.stmt.BlockStmt;
 import com.github.javaparser.ast.stmt.Statement;
 
@@ -49,7 +49,7 @@ public class CodeRegressionCreator {
          } else if (callable instanceof ConstructorDeclaration) {
             insertToConstructor(callable, busyWait);
          } else if (callable == null && entity.getMethod().equals("<init>")) {
-            ClassOrInterfaceDeclaration clazz = ClazzFinder.findClazz(entity, unit.getChildNodes());
+            TypeDeclaration<?> clazz = ClazzFinder.findClazz(entity, unit.getChildNodes());
             ConstructorDeclaration constructor = clazz.addConstructor(Keyword.PUBLIC);
             constructor.getBody().addStatement(busyWait);
          } else {   
