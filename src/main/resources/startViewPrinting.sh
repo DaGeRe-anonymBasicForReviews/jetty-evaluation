@@ -1,11 +1,7 @@
 # This starts generating all dependency files and all views
 
-start=$(pwd)
-
-for i in {0..999}
-do
-	cd $start
-
+function startViewPrinting() {
+	i=$1
 	echo "Starting regression-$i"
 	mkdir regression-$i
 	cd regression-$i
@@ -23,8 +19,19 @@ do
 	java -cp $PEASS_PROJECT/distribution/target/peass-distribution-0.1-SNAPSHOT.jar de.dagere.peass.dependency.traces.TraceGeneratorStarter \
 		-dependencyfile results/deps_jetty.project.json -pl ":jetty-jmh" \
 		-folder jetty.project &> log.txt &
+}
 
-	echo "Sleeping 2 minutes"
+start=$(pwd)
+
+startViewPrinting 0
+
+for i in {1..999}
+do
+	cd $start
+
+	startViewPrinting $i	
+
+	echo "Sleeping 15 minutes"
 	date
-	sleep 2m
+	sleep 15m
 done
