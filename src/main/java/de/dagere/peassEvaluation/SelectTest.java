@@ -85,8 +85,12 @@ public class SelectTest implements Callable<Void> {
       Version version = dependencies.getVersions().get(newestVersion);
 
       TestSet tests = version.getTests();
+      
+      System.out.println("Before sleep test removal: " + tests.classCount());
 
       List<TestCase> withoutSleepTests = selectWithoutSleepTests(tests);
+      
+      System.out.println("After sleep test removal: " + tests.classCount());
 
       TestProperties selectedTest = selectTestBasedOnTraces(newestVersion, withoutSleepTests);
 
