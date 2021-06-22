@@ -28,7 +28,7 @@ else
 	cd jetty-traces && git pull && cd ..
 fi
 
-for i in {1..10}
+for i in 1
 do
 	cd jetty.project/ && git checkout regression-$i && cd ..
 
@@ -36,23 +36,29 @@ do
 	version=$(git rev-parse HEAD)
 	cd ..
 
+	mkdir regression-$i
 	echo "Analyzing $version"
-	java -cp $PEASS_PROJECT/distribution/target/peass-distribution-0.1-SNAPSHOT.jar de.peass.debugtools.DependencyReadingContinueStarter \
-		-dependencyfile deps_jetty.project.json -folder jetty.project/ -doNotUpdateDependencies &> dependencylog.txt
+	java -cp $PEASS_PROJECT/distribution/target/peass-distribution-0.1-SNAPSHOT.jar de.dagere.peass.debugtools.DependencyReadingContinueStarter \
+		-dependencyfile deps_jetty.project.json -folder jetty.project/ -doNotUpdateDependencies &> regression-$i/dependencylog.txt
+
+#	java -cp $PEASS_PROJECT/distribution/target/peass-distribution-0.1-SNAPSHOT.jar de.dagere.peass.dependency.traces.TraceGeneratorStarter \
+#	        -dependencyfile results/deps_jetty.project.json -pl ":jetty-jmh" \
+#		-folder jetty.project &> regression-$i/tracelog.txt
 
 	method=$(cat ../regressions.csv | grep "regression-$i;" | awk -F';' '{print $3}')
 
 	java -cp ../../../../target/jetty-evaluation-0.1-SNAPSHOT.jar \
 		de.dagere.peassEvaluation.SelectTest \
-		-dependencyfile results/deps_jetty.project.json \
+		-dependencyfile results/deps_jetty.project_out.json \
 		-tracesFolder jetty-traces/regression-$i/results/ \
 		-method $method \
-		-folder jetty.project/ &> randomselection.txt
+		-folder jetty.project/ &> regression-$i/randomselection.txt
 
         methodName=$(cat test.txt | awk -F '#' '{print $2}')
         clazzName=$(cat test.txt | awk -F '[§#]' '{print $2}')
 	calls=$(cat randomselection.txt | grep "Test: TestCase " | uniq | grep $clazzName | grep $methodName | awk '{print $(NF-1)}')
-
+	
+	echo "Calls: $calls"
 	if [ $calls -gt 1000 ]
 	then
 		repetitions=10000
@@ -61,8 +67,8 @@ do
 	fi
 	testName=$(cat test.txt)
 	echo "Measuring $testName Calls: $calls Repetitions: $repetitions"
-	java -cp $PEASS_PROJECT/distribution/target/peass-distribution-0.1-SNAPSHOT.jar de.peass.DependencyTestStarter \
-		-dependencyfile results/deps_jetty.project.json -folder jetty.project/ \
+	java -cp $PEASS_PROJECT/distribution/target/peass-distribution-0.1-SNAPSHOT.jar de.dagere.peass.DependencyTestStarter \
+		-dependencyfile results/deps_jetty.project_out.json -folder jetty.project/ \
 		-iterations 10 \
 		-warmup 0 \
 		-repetitions $repetitions \
@@ -70,9 +76,8 @@ do
 		-timeout 5 \
 		-measurementStrategy PARALLEL \
 		-version $version -pl ":jetty-jmh" \
-		-test $testName	&> measurelog.txt
+		-test $testName	&> regression-$i/measurelog.txt
 	
+	mv results/deps_jetty.project_out.json regression-$i
 	mv jetty.project_peass regression-$i
-	mv measurelog.txt regression-$i
-	mv dependencylog.txt regression-$i
 done
