@@ -56,7 +56,7 @@ do
 
         methodName=$(cat test.txt | awk -F '#' '{print $2}')
         clazzName=$(cat test.txt | awk -F '[§#]' '{print $2}')
-	calls=$(cat randomselection.txt | grep "Test: TestCase " | uniq | grep $clazzName | grep $methodName | awk '{print $(NF-1)}')
+	calls=$(cat regression-$i/randomselection.txt | grep "Test: TestCase " | uniq | grep $clazzName | grep $methodName | awk '{print $(NF-1)}')
 	
 	echo "Calls: $calls"
 	if [ $calls -gt 1000 ]
@@ -77,7 +77,8 @@ do
 		-measurementStrategy PARALLEL \
 		-version $version -pl ":jetty-jmh" \
 		-test $testName	&> regression-$i/measurelog.txt
-	
+
+	mv test.txt regression-$i	
 	mv results/deps_jetty.project_out.json regression-$i
 	mv jetty.project_peass regression-$i
 done
