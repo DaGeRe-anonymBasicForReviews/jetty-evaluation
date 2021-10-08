@@ -80,11 +80,13 @@ do
 			-measurementStrategy PARALLEL \
 			-version $version -pl ":jetty-jmh" \
 			-test $testName	&> regression-$i/measurelog.txt
+			
+			mv test.txt regression-$i
 	else
 		echo "No test was selected"
 	fi
 
-	mv test.txt regression-$i	
+	
 	mv results/deps_jetty.project_out.json regression-$i
 	mv jetty.project_peass regression-$i
 		
