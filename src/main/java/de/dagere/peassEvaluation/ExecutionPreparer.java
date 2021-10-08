@@ -13,8 +13,8 @@ import org.apache.maven.model.io.xpp3.MavenXpp3Reader;
 import org.apache.maven.model.io.xpp3.MavenXpp3Writer;
 import org.codehaus.plexus.util.xml.pull.XmlPullParserException;
 
-import de.dagere.peass.dependency.execution.MavenPomUtil;
 import de.dagere.peass.dependency.execution.ProjectModules;
+import de.dagere.peass.dependency.execution.pom.MavenPomUtil;
 import de.dagere.peass.dependency.moduleinfo.ModuleInfoEditor;
 import net.kieker.sourceinstrumentation.AllowedKiekerRecord;
 import net.kieker.sourceinstrumentation.InstrumentationConfiguration;
@@ -41,7 +41,7 @@ public class ExecutionPreparer {
    private static void instrumentSources(final File projectFolder) throws IOException {
       final HashSet<String> includedPatterns = new HashSet<>();
       includedPatterns.add("*");
-      final InstrumentationConfiguration configuration = new InstrumentationConfiguration(AllowedKiekerRecord.OPERATIONEXECUTION, false, true, false, includedPatterns, true, 1000);
+      final InstrumentationConfiguration configuration = new InstrumentationConfiguration(AllowedKiekerRecord.OPERATIONEXECUTION, false, true, false, includedPatterns, new HashSet<>(), false, 1000, false);
       final InstrumentKiekerSource sourceInstrumenter = new InstrumentKiekerSource(configuration);
       sourceInstrumenter.instrumentProject(projectFolder);
    }
@@ -53,7 +53,7 @@ public class ExecutionPreparer {
          final MavenXpp3Reader reader = new MavenXpp3Reader();
          model = reader.read(fileInputStream);
       }
-      MavenPomUtil.extendDependencies(model, false);
+      MavenPomUtil.extendDependencies(model, false, false);
 
       try (FileWriter fileWriter = new FileWriter(pomFile)) {
          final MavenXpp3Writer writer = new MavenXpp3Writer();

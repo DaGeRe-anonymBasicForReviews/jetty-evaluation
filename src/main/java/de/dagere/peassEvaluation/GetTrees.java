@@ -9,8 +9,8 @@ import org.apache.logging.log4j.Logger;
 import org.codehaus.plexus.util.xml.pull.XmlPullParserException;
 
 import de.dagere.peass.dependency.analysis.ModuleClassMapping;
-import de.dagere.peass.dependency.execution.MavenPomUtil;
 import de.dagere.peass.dependency.execution.ProjectModules;
+import de.dagere.peass.dependency.execution.pom.MavenPomUtil;
 import de.dagere.peass.measurement.rca.data.CallTreeNode;
 import de.dagere.peass.utils.Constants;
 import de.dagere.peassEvaluation.treeReading.KiekerTreeReaderConfiguration;
