@@ -65,20 +65,27 @@ do
 	else
 		repetitions=1000000
 	fi
-	testName=$(cat test.txt)
-	echo "Measuring $testName Calls: $calls Repetitions: $repetitions"
-	java -cp $PEASS_PROJECT/distribution/target/peass-distribution-0.1-SNAPSHOT.jar de.dagere.peass.DependencyTestStarter \
-		-dependencyfile results/deps_jetty.project_out.json -folder jetty.project/ \
-		-iterations 10 \
-		-warmup 0 \
-		-repetitions $repetitions \
-		-vms 100 \
-		-timeout 5 \
-		-measurementStrategy PARALLEL \
-		-version $version -pl ":jetty-jmh" \
-		-test $testName	&> regression-$i/measurelog.txt
+	
+	if [ -f test.txt ]
+	then
+		testName=$(cat test.txt)
+		echo "Measuring $testName Calls: $calls Repetitions: $repetitions"
+		java -cp $PEASS_PROJECT/distribution/target/peass-distribution-0.1-SNAPSHOT.jar de.dagere.peass.DependencyTestStarter \
+			-dependencyfile results/deps_jetty.project_out.json -folder jetty.project/ \
+			-iterations 10 \
+			-warmup 0 \
+			-repetitions $repetitions \
+			-vms 100 \
+			-timeout 5 \
+			-measurementStrategy PARALLEL \
+			-version $version -pl ":jetty-jmh" \
+			-test $testName	&> regression-$i/measurelog.txt
+	else
+		echo "No test was selected"
+	fi
 
 	mv test.txt regression-$i	
 	mv results/deps_jetty.project_out.json regression-$i
 	mv jetty.project_peass regression-$i
+		
 done
