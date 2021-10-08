@@ -85,11 +85,11 @@ public class SelectTest implements Callable<Void> {
       Version version = dependencies.getVersions().get(newestVersion);
 
       TestSet tests = version.getTests();
-      
+
       System.out.println("Before sleep test removal: " + tests.classCount());
 
       List<TestCase> withoutSleepTests = selectWithoutSleepTests(tests);
-      
+
       System.out.println("After sleep test removal: " + tests.classCount());
 
       TestProperties selectedTest = selectTestBasedOnTraces(newestVersion, withoutSleepTests);
@@ -99,7 +99,9 @@ public class SelectTest implements Callable<Void> {
       // TestCase tc = withoutSleepTests.get(selectedIndex);
       // System.out.println(tc.getModule() + ChangedEntity.MODULE_SEPARATOR + tc.getClazz() + ChangedEntity.METHOD_SEPARATOR + tc.getMethod());
       //
-      writeTest(selectedTest.getTest());
+      if (selectedTest != null) {
+         writeTest(selectedTest.getTest());
+      }
 
       return null;
    }
@@ -138,7 +140,11 @@ public class SelectTest implements Callable<Void> {
             LOG.info("Did not analyze tracefile {} since it did not exist", traceFile);
          }
       }
-      System.out.println("Finally selected: " + selectedTest.getTest());
+      if (selectedTest != null) {
+         System.out.println("Finally selected: " + selectedTest.getTest());
+      } else {
+         System.out.println("No test selected");
+      }
       return selectedTest;
    }
 
