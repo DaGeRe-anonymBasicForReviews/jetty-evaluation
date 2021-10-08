@@ -30,7 +30,7 @@ fi
 
 for i in 1
 do
-	cd jetty.project/ && git checkout regression-$i && cd ..
+	cd jetty.project/ && git checkout regression-$i &> ../checkout.txt && cd ..
 
 	cd jetty.project
 	version=$(git rev-parse HEAD)
@@ -86,7 +86,7 @@ do
 		echo "No test was selected"
 	fi
 
-	
+	mv checkout.txt regression-$i
 	mv results/deps_jetty.project_out.json regression-$i
 	mv jetty.project_peass regression-$i
 		
