@@ -6,7 +6,7 @@ randomselection.txt
 dependency-reduced-pom.xml
 target/
 src/main/resources/peass/dependencylog.txt
-src/main/resources/peass/jetty-traces/
+scripts/peass/jetty-traces/
 src/main/resources/peass/jetty.project/
 src/main/resources/peass/jetty.project_peass/
 src/main/resources/peass/results/
