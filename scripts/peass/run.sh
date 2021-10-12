@@ -39,7 +39,10 @@ do
 	mkdir regression-$i
 	echo "Analyzing $version"
 	java -cp $PEASS_PROJECT/distribution/target/peass-distribution-0.1-SNAPSHOT.jar de.dagere.peass.debugtools.DependencyReadingContinueStarter \
-		-dependencyfile deps_jetty.project.json -folder jetty.project/ -doNotUpdateDependencies &> regression-$i/dependencylog.txt
+		-dependencyfile deps_jetty.project.json \
+		-folder jetty.project/ \
+		-skipProcessSuccessRuns \
+		-doNotUpdateDependencies &> regression-$i/dependencylog.txt
 
 #	java -cp $PEASS_PROJECT/distribution/target/peass-distribution-0.1-SNAPSHOT.jar de.dagere.peass.dependency.traces.TraceGeneratorStarter \
 #	        -dependencyfile results/deps_jetty.project.json -pl ":jetty-jmh" \
