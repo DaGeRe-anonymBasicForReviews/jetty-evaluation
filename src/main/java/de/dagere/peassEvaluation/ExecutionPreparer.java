@@ -13,6 +13,7 @@ import org.apache.maven.model.io.xpp3.MavenXpp3Reader;
 import org.apache.maven.model.io.xpp3.MavenXpp3Writer;
 import org.codehaus.plexus.util.xml.pull.XmlPullParserException;
 
+import de.dagere.peass.config.ExecutionConfig;
 import de.dagere.peass.dependency.execution.ProjectModules;
 import de.dagere.peass.dependency.execution.pom.MavenPomUtil;
 import de.dagere.peass.dependency.moduleinfo.ModuleInfoEditor;
@@ -23,7 +24,7 @@ import net.kieker.sourceinstrumentation.instrument.InstrumentKiekerSource;
 public class ExecutionPreparer {
    public static void main(final String[] args) throws FileNotFoundException, IOException, XmlPullParserException {
       File projectFolder = new File(args[0]);
-      ProjectModules modules = MavenPomUtil.getModules(new File(projectFolder, "pom.xml"));
+      ProjectModules modules = MavenPomUtil.getModules(new File(projectFolder, "pom.xml"), new ExecutionConfig());
       List<File> moduleList = modules.getModules();
       for (File module : moduleList) {
          editPom(module);
