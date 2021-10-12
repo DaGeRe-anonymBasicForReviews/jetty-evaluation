@@ -30,13 +30,14 @@ fi
 
 for i in 1
 do
-	cd jetty.project/ && git checkout regression-$i &> ../checkout.txt && cd ..
+	cd jetty.project/ && git checkout regression-$i &> ../checkout.txt
 
-	cd jetty.project
 	version=$(git rev-parse HEAD)
 	cd ..
 
 	mkdir regression-$i
+	mv checkout.txt regression-$i
+	
 	echo "Analyzing $version"
 	java -cp $PEASS_PROJECT/distribution/target/peass-distribution-0.1-SNAPSHOT.jar de.dagere.peass.debugtools.DependencyReadingContinueStarter \
 		-dependencyfile deps_jetty.project.json \
@@ -89,8 +90,7 @@ do
 	else
 		echo "No test was selected"
 	fi
-
-	mv checkout.txt regression-$i
+	
 	mv results/deps_jetty.project_out.json regression-$i
 	mv jetty.project_peass regression-$i
 		
