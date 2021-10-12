@@ -24,10 +24,17 @@ do
 
 	cp $start/deps_jetty.project.json deps_jetty.project.json
 
-	java -cp $PEASS_PROJECT/distribution/target/peass-distribution-0.1-SNAPSHOT.jar de.peass.debugtools.DependencyReadingContinueStarter \
-                -dependencyfile deps_jetty.project.json -folder jetty.project/ -doNotUpdateDependencies &> dependencylog.txt
+	java -cp $PEASS_PROJECT/distribution/target/peass-distribution-0.1-SNAPSHOT.jar de.dagere.peass.debugtools.DependencyReadingContinueStarter \
+                -dependencyfile deps_jetty.project.json \
+                -folder jetty.project/ \
+                -skipProcessSuccessRuns \
+		-doNotUpdateDependencies &> dependencylog.txt
+	mv results/deps_jetty.project_out.json deps_jetty.project.json 
 
-	java -cp $PEASS_PROJECT/distribution/target/peass-distribution-0.1-SNAPSHOT.jar de.peass.dependency.traces.TraceGeneratorStarter \
-		-dependencyfile results/deps_jetty.project.json -pl ":jetty-jmh" \
+	java -cp $PEASS_PROJECT/distribution/target/peass-distribution-0.1-SNAPSHOT.jar de.dagere.peass.dependency.traces.TraceGeneratorStarter \
+		-dependencyfile deps_jetty.project.json \
+		-pl ":jetty-jmh" \
 		-folder jetty.project &> log.txt &
 done
+
+wait
