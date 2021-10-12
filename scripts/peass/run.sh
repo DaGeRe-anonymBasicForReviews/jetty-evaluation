@@ -51,7 +51,7 @@ do
 
 	method=$(cat ../regressions.csv | grep "regression-$i;" | awk -F';' '{print $3}')
 
-	java -cp ../../../../target/jetty-evaluation-0.1-SNAPSHOT.jar \
+	java -cp ../../target/jetty-evaluation-0.1-SNAPSHOT.jar \
 		de.dagere.peassEvaluation.SelectTest \
 		-dependencyfile results/deps_jetty.project_out.json \
 		-tracesFolder jetty-traces/regression-$i/results/ \
