@@ -62,9 +62,10 @@ do
 		-folder jetty.project/ &> regression-$i/randomselection.txt
         
 	mv results/deps_jetty.project_out.json regression-$i
+	mv test.txt regression-$i
 	if [ -f regression-$i/test.txt ]
 	then
-		mv test.txt regression-$i
+		
 		
 		methodName=$(cat  regression-$i/test.txt | awk -F '#' '{print $2}')
 		clazzName=$(cat regression-$i/test.txt | awk -F '[§#]' '{print $2}')
