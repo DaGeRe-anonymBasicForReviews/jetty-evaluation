@@ -28,6 +28,8 @@ fi
 #	cd jetty-traces && git pull && cd ..
 #fi
 
+vms=100
+
 for i in 1
 do
 	cd jetty.project/ && git checkout regression-$i &> ../checkout.txt
@@ -43,6 +45,7 @@ do
 		-dependencyfile deps_jetty.project.json \
 		-folder jetty.project/ \
 		-skipProcessSuccessRuns \
+		-pl ":jetty-jmh" \
 		-doNotUpdateDependencies &> regression-$i/dependencylog.txt
 
 #	java -cp $PEASS_PROJECT/distribution/target/peass-distribution-0.1-SNAPSHOT.jar de.dagere.peass.dependency.traces.TraceGeneratorStarter \
@@ -57,41 +60,71 @@ do
 		-tracesFolder jetty-traces/regression-$i/results/ \
 		-method $method \
 		-folder jetty.project/ &> regression-$i/randomselection.txt
-
         
-	
-	if [ -f test.txt ]
+	mv results/deps_jetty.project_out.json regression-$i
+	if [ -f regression-$i/test.txt ]
 	then
-		methodName=$(cat test.txt | awk -F '#' '{print $2}')
-		clazzName=$(cat test.txt | awk -F '[§#]' '{print $2}')
-		calls=$(cat regression-$i/randomselection.txt | grep "Test: TestCase " | uniq | grep $clazzName | grep $methodName | awk '{print $(NF-1)}')
+		mv test.txt regression-$i
+		
+		methodName=$(cat  regression-$i/test.txt | awk -F '#' '{print $2}')
+		clazzName=$(cat regression-$i/test.txt | awk -F '[§#]' '{print $2}')
+		calls=$(cat regression-$i/randomselection.txt | grep "Test: " | uniq | grep $clazzName | grep $methodName | awk '{print $(NF-1)}')
 		
 		echo "Calls: $calls"
 		if [ $calls -gt 1000 ]
 		then
-			repetitions=10000
+			repetitions=1000
 		else
-			repetitions=1000000
+			repetitions=100000
 		fi
-		testName=$(cat test.txt)
+		testName=$(cat regression-$i/test.txt)
 		echo "Measuring $testName Calls: $calls Repetitions: $repetitions"
 		java -cp $PEASS_PROJECT/distribution/target/peass-distribution-0.1-SNAPSHOT.jar de.dagere.peass.DependencyTestStarter \
-			-dependencyfile results/deps_jetty.project_out.json -folder jetty.project/ \
+			-dependencyfile regression-$i/deps_jetty.project_out.json -folder jetty.project/ \
 			-iterations 10 \
 			-warmup 0 \
 			-repetitions $repetitions \
-			-vms 100 \
+			-vms $vms \
 			-timeout 5 \
 			-measurementStrategy PARALLEL \
-			-version $version -pl ":jetty-jmh" \
+			-version $version \
+			-pl ":jetty-jmh" \
 			-test $testName	&> regression-$i/measurelog.txt
-			
-			mv test.txt regression-$i
+		
+		java -jar $PEASS_PROJECT/distribution/target/peass-distribution-0.1-SNAPSHOT.jar getchanges \
+			-data jetty.project_peass/measurementsFull/*.xml
+		
+		changes=$(cat results/changes_*.json | jq ".versionChanges.\"$version\".testcaseChanges | keys[0]")
+		
+		echo "Changes: $changes"
+		
+		if [ ! -z "$changes" ]
+		then
+			mkdir regression-$i/properties_jetty.project
+			java -jar $PEASS_PROJECT/distribution/target/peass-distribution-0.1-SNAPSHOT.jar readproperties \
+				-dependencyfile regression-$i/deps_jetty.project_out.json -folder jetty.project/ \
+				-changefile results/changes_*.json \
+				-viewfolder jetty-traces/regression-$i/results/views_jetty.project/ \
+				-out regression-$i/properties_jetty.project/properties.json
+		
+			java -jar $PEASS_PROJECT/distribution/target/peass-distribution-0.1-SNAPSHOT.jar searchcause \
+				-dependencyfile regression-$i/deps_jetty.project_out.json -folder jetty.project/ \
+				-iterations 10 \
+				-warmup 0 \
+				-repetitions $repetitions \
+				-vms $vms \
+				-timeout 5 \
+				-measurementStrategy PARALLEL \
+				--rcaStrategy UNTIL_SOURCE_CHANGE \
+				-propertyFolder regression-$i/properties_jetty.project/ \
+				-version $version \
+				-pl ":jetty-jmh" \
+				-test $testName &> regression-$i/rca.txt
+		fi
 	else
 		echo "No test was selected"
 	fi
 	
-	mv results/deps_jetty.project_out.json regression-$i
 	mv jetty.project_peass regression-$i
 		
 done
