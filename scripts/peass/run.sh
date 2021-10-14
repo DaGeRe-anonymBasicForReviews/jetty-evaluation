@@ -58,6 +58,7 @@ do
 
 	method=$(cat ../regressions.csv | grep "regression-$i;" | awk -F';' '{print $3}')
 
+	cd jetty.project && git reset --hard && cd ..
 	java -cp ../../target/jetty-evaluation-0.1-SNAPSHOT.jar \
 		de.dagere.peassEvaluation.SelectTest \
 		-dependencyfile regression-$i/deps_jetty.project_out.json \
