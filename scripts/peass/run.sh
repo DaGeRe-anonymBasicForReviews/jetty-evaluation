@@ -28,7 +28,7 @@ fi
 #	cd jetty-traces && git pull && cd ..
 #fi
 
-vms=100
+vms=30
 
 for i in 1
 do
