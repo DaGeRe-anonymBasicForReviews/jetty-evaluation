@@ -94,8 +94,9 @@ do
 		
 		java -jar $PEASS_PROJECT/distribution/target/peass-distribution-0.1-SNAPSHOT.jar getchanges \
 			-data jetty.project_peass/measurementsFull/*.xml
+		mv results/* regression-$i/results/
 		
-		changes=$(cat results/changes_*.json | jq ".versionChanges.\"$version\".testcaseChanges | keys[0]")
+		changes=$(cat regression-$i/results/changes_*.json | jq ".versionChanges.\"$version\".testcaseChanges | keys[0]")
 		
 		echo "Changes: $changes"
 		
@@ -104,7 +105,7 @@ do
 			mkdir regression-$i/properties_jetty.project
 			java -jar $PEASS_PROJECT/distribution/target/peass-distribution-0.1-SNAPSHOT.jar readproperties \
 				-dependencyfile regression-$i/deps_jetty.project_out.json -folder jetty.project/ \
-				-changefile results/changes_*.json \
+				-changefile regression-$i/results/changes_*.json \
 				-viewfolder jetty-traces/regression-$i/results/views_jetty.project/ \
 				-out regression-$i/properties_jetty.project/properties.json
 		
