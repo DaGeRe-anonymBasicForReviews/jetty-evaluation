@@ -61,6 +61,7 @@ do
 		-method $method \
 		-folder jetty.project/ &> regression-$i/randomselection.txt
         
+	mkdir -p regression-$i/results
 	mv results/deps_jetty.project_out.json regression-$i
 	mv test.txt regression-$i
 	if [ -f regression-$i/test.txt ]
