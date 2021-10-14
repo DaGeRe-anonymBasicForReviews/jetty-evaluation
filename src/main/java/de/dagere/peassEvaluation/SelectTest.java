@@ -86,11 +86,11 @@ public class SelectTest implements Callable<Void> {
 
       TestSet tests = version.getTests();
 
-      System.out.println("Before sleep test removal: " + tests.classCount());
+      LOG.info("Before sleep test removal: " + tests.classCount());
 
       List<TestCase> withoutSleepTests = selectWithoutSleepTests(tests);
 
-      System.out.println("After sleep test removal: " + tests.classCount());
+      LOG.info("After sleep test removal: " + withoutSleepTests.size());
 
       TestProperties selectedTest = selectTestBasedOnTraces(newestVersion, withoutSleepTests);
 
@@ -132,7 +132,7 @@ public class SelectTest implements Callable<Void> {
             int occurences = StringUtils.countMatches(content, method);
             int length = StringUtils.countMatches(content, "\n");
             double coefficient = ((double) length) / occurences;
-            System.out.println("Test: " + test.toString() + " " + occurences + " " + length + " " + coefficient);
+            LOG.info("Test: " + test.toString() + " " + occurences + " " + length + " " + coefficient);
             if (selectedTest == null || coefficient < selectedTest.coefficient) {
                selectedTest = new TestProperties(test, occurences, length, coefficient);
             }
@@ -141,13 +141,19 @@ public class SelectTest implements Callable<Void> {
          }
       }
       if (selectedTest != null) {
-         System.out.println("Finally selected: " + selectedTest.getTest());
+         LOG.info("Finally selected: " + selectedTest.getTest());
       } else {
-         System.out.println("No test selected");
+         LOG.info("No test selected");
       }
       return selectedTest;
    }
 
+   /**
+    * All tests that contain Thread.sleep need to be removed, because Thread.sleep makes it nearly impossible to measure the performance reliably
+    * @param tests
+    * @return
+    * @throws FileNotFoundException
+    */
    private List<TestCase> selectWithoutSleepTests(final TestSet tests) throws FileNotFoundException {
       List<TestCase> withoutSleepTests = new LinkedList<>();
       for (TestCase tc : tests.getTests()) {
