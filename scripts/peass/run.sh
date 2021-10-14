@@ -52,7 +52,6 @@ do
 	java -cp $PEASS_PROJECT/distribution/target/peass-distribution-0.1-SNAPSHOT.jar de.dagere.peass.dependency.traces.TraceGeneratorStarter \
 	        -dependencyfile regression-$i/deps_jetty.project_out.json \
 	        -pl ":jetty-jmh" \
-	        --includes "*HttpTesterTest*" \
 		-folder jetty.project &> regression-$i/tracelog.txt
 	mkdir -p regression-$i/results
 	mv results/views_jetty.project regression-$i/results
