@@ -110,7 +110,7 @@ do
 			java -jar $PEASS_PROJECT/distribution/target/peass-distribution-0.1-SNAPSHOT.jar readproperties \
 				-dependencyfile regression-$i/deps_jetty.project_out.json -folder jetty.project/ \
 				-changefile regression-$i/results/changes_*.json \
-				-viewfolder jetty-traces/regression-$i/results/views_jetty.project/ \
+				-viewfolder regression-$i/results/views_jetty.project/ \
 				-out regression-$i/properties_jetty.project/properties.json
 		
 			java -jar $PEASS_PROJECT/distribution/target/peass-distribution-0.1-SNAPSHOT.jar searchcause \
