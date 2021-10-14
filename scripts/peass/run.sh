@@ -47,22 +47,25 @@ do
 		-skipProcessSuccessRuns \
 		-pl ":jetty-jmh" \
 		-doNotUpdateDependencies &> regression-$i/dependencylog.txt
+	mv results/deps_jetty.project_out.json regression-$i
 
-#	java -cp $PEASS_PROJECT/distribution/target/peass-distribution-0.1-SNAPSHOT.jar de.dagere.peass.dependency.traces.TraceGeneratorStarter \
-#	        -dependencyfile results/deps_jetty.project.json -pl ":jetty-jmh" \
-#		-folder jetty.project &> regression-$i/tracelog.txt
+	java -cp $PEASS_PROJECT/distribution/target/peass-distribution-0.1-SNAPSHOT.jar de.dagere.peass.dependency.traces.TraceGeneratorStarter \
+	        -dependencyfile regression-$i/deps_jetty.project_out.json \
+	        -pl ":jetty-jmh" \
+	        --includes "*HttpTesterTest*" \
+		-folder jetty.project &> regression-$i/tracelog.txt
+	mkdir -p regression-$i/results
+	mv results/views_jetty.project regression-$i/results
 
 	method=$(cat ../regressions.csv | grep "regression-$i;" | awk -F';' '{print $3}')
 
 	java -cp ../../target/jetty-evaluation-0.1-SNAPSHOT.jar \
 		de.dagere.peassEvaluation.SelectTest \
-		-dependencyfile results/deps_jetty.project_out.json \
-		-tracesFolder jetty-traces/regression-$i/results/ \
+		-dependencyfile regression-$i/deps_jetty.project_out.json \
+		-tracesFolder regression-$i/results/ \
 		-method $method \
 		-folder jetty.project/ &> regression-$i/randomselection.txt
-        
-	mkdir -p regression-$i/results
-	mv results/deps_jetty.project_out.json regression-$i
+	
 	mv test.txt regression-$i
 	if [ -f regression-$i/test.txt ]
 	then
