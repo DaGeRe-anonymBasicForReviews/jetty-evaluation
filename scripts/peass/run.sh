@@ -76,12 +76,18 @@ do
 		calls=$(cat regression-$i/randomselection.txt | grep "Test: " | uniq | grep $clazzName | grep $methodName | awk '{print $(NF-1)}')
 		
 		echo "Calls: $calls"
-		if [ $calls -gt 1000 ]
+		if [ $calls -gt 10000 ]
 		then
-			repetitions=1000
+			repetitions=100
 		else
-			repetitions=100000
+			if [ $calls -gt 1000 ]
+			then
+				repetitions=1000
+			else
+				repetitions=100000
+			fi
 		fi
+		
 		testName=$(cat regression-$i/test.txt)
 		echo "Measuring $testName Calls: $calls Repetitions: $repetitions"
 		java -cp $PEASS_PROJECT/distribution/target/peass-distribution-0.1-SNAPSHOT.jar de.dagere.peass.DependencyTestStarter \
