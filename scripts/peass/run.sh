@@ -111,7 +111,7 @@ do
 				-dependencyfile regression-$i/deps_jetty.project_out.json -folder jetty.project/ \
 				-changefile regression-$i/results/changes_*.json \
 				-viewfolder regression-$i/results/views_jetty.project/ \
-				-out regression-$i/properties_jetty.project/properties.json
+				-out regression-$i/properties_jetty.project/properties.json &> regression-$i/readproperties.txt
 		
 			java -jar $PEASS_PROJECT/distribution/target/peass-distribution-0.1-SNAPSHOT.jar searchcause \
 				-dependencyfile regression-$i/deps_jetty.project_out.json -folder jetty.project/ \
