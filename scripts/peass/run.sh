@@ -97,7 +97,7 @@ do
 			-test $testName	&> regression-$i/measurelog.txt
 		
 		java -jar $PEASS_PROJECT/distribution/target/peass-distribution-0.1-SNAPSHOT.jar getchanges \
-			-data jetty.project_peass/measurementsFull/*.xml
+			-data jetty.project_peass/measurementsFull/*.xml &> regression-$i/getchanges.txt
 		mv results/* regression-$i/results/
 		
 		changes=$(cat regression-$i/results/changes_*.json | jq ".versionChanges.\"$version\".testcaseChanges | keys[0]")
