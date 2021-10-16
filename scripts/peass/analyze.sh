@@ -19,7 +19,7 @@ function printCorrect {
 }
 
 function printRCACorrect {
-	echo -n > results/rcaCorrect.txt
+	echo -n > results/rcaIncorrect.txt
 	echo -n "Correct RCA in root node: "
 	for regression in regression-*
 	do 
@@ -33,14 +33,14 @@ function printRCACorrect {
 			then
 				echo "1"
 			else
-				echo $regression >> results/rcaCorrect.txt
+				echo $regression >> results/rcaIncorrect.txt
 			fi
 		fi
 	done | awk '{sum+=$1} END {print sum}'
 }
 
 function printRCACorrectLeaf {
-	echo -n > results/rcaCorrectLeaf.txt
+	echo -n > results/rcaIncorrectLeaf.txt
 	echo -n "Correct RCA in leaf node: "
 	for regression in regression-*
 	do 
@@ -53,7 +53,7 @@ function printRCACorrectLeaf {
 			then
 				echo "1"
 			else
-				echo $regression >> results/rcaCorrectLeaf.txt
+				echo $regression >> results/rcaIncorrectLeaf.txt
 			fi
 		fi
 	done | awk '{sum+=$1} END {print sum}'
