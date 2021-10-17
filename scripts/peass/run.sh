@@ -33,9 +33,14 @@ vms=30
 for i in 1
 do
 	cd jetty.project/ && git checkout regression-$i &> ../checkout.txt
-
+	
 	version=$(git rev-parse HEAD)
 	cd ..
+	
+	if [ -d results/ ]
+	then
+		rm results/* -rf
+	fi
 
 	mkdir regression-$i
 	mv checkout.txt regression-$i
