@@ -78,7 +78,7 @@ do
 		
 		methodName=$(cat  regression-$i/test.txt | awk -F '#' '{print $2}')
 		clazzName=$(cat regression-$i/test.txt | awk -F '[§#]' '{print $2}')
-		calls=$(cat regression-$i/randomselection.txt | grep "Test: " | uniq | grep $clazzName | grep $methodName | awk '{print $(NF-1)}')
+		calls=$(cat regression-$i/randomselection.txt | grep "Test: " | uniq | grep $clazzName | grep $methodName | awk '{print $(NF-1)}' | uniq)
 		
 		echo "Calls: $calls"
 		if [ $calls -gt 10000 ]
