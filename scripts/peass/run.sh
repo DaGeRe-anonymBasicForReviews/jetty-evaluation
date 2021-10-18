@@ -157,7 +157,9 @@ do
 		testName=$(cat regression-$i/test.txt)
 		
 		measure $i $testName $version $vms $repetitions
-		changes=$(cat regression-$i/results/changes_*.json | jq ".versionChanges.\"$version\".testcaseChanges | keys[0]")
+		
+		foundVersion=$(cat regression-$i/results/changes_*.json | jq ".versionChanges | keys[0]")
+		changes=$(cat regression-$i/results/changes_*.json | jq ".versionChanges.\"$foundVersion\".testcaseChanges | keys[0]")
 		
 		echo "Changes: $changes"
 		
