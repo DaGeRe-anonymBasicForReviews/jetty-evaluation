@@ -6,6 +6,79 @@
 #net.ipv4.tcp_keepalive_time = 10
 # and call sudo sysctl -p /etc/sysctl.conf 
 
+function executeRCA {
+	i=$1
+	testName=$2
+	version=$3
+	vms=$4
+	repetitions=$5
+	mkdir regression-$i/properties_jetty.project
+	java -jar $PEASS_PROJECT/distribution/target/peass-distribution-0.1-SNAPSHOT.jar readproperties \
+		-dependencyfile regression-$i/deps_jetty.project_out.json -folder jetty.project/ \
+		-changefile regression-$i/results/changes_*.json \
+		-viewfolder regression-$i/results/views_jetty.project/ \
+		-out regression-$i/properties_jetty.project/properties.json &> regression-$i/readproperties.txt
+
+	java -jar $PEASS_PROJECT/distribution/target/peass-distribution-0.1-SNAPSHOT.jar searchcause \
+		-dependencyfile regression-$i/deps_jetty.project_out.json -folder jetty.project/ \
+		-iterations 10 \
+		-warmup 0 \
+		-repetitions $repetitions \
+		-vms $vms \
+		-timeout 5 \
+		-measurementStrategy PARALLEL \
+		--rcaStrategy UNTIL_SOURCE_CHANGE \
+		-propertyFolder regression-$i/properties_jetty.project/ \
+		-version $version \
+		-pl ":jetty-jmh" \
+		-test $testName &> regression-$i/rca.txt
+}
+
+function getRepetitions {
+	i=$1
+	methodName=$(cat  regression-$i/test.txt | awk -F '#' '{print $2}')
+	clazzName=$(cat regression-$i/test.txt | awk -F '[§#]' '{print $2}')
+	calls=$(cat regression-$i/randomselection.txt | grep "Test: " | uniq | grep $clazzName | grep $methodName | awk '{print $(NF-1)}')
+	
+	if [ $calls -gt 10000 ]
+	then
+		repetitions=100
+	else
+		if [ $calls -gt 1000 ]
+		then
+			repetitions=1000
+		else
+			repetitions=100000
+		fi
+	fi
+	echo $repetitions
+}
+
+function measure {
+	i=$1
+	testName=$2
+	version=$3
+	vms=$4
+	repetitions=$5
+
+	echo "Measuring $testName Repetitions: $repetitions"
+	java -cp $PEASS_PROJECT/distribution/target/peass-distribution-0.1-SNAPSHOT.jar de.dagere.peass.DependencyTestStarter \
+		-dependencyfile regression-$i/deps_jetty.project_out.json -folder jetty.project/ \
+		-iterations 10 \
+		-warmup 0 \
+		-repetitions $repetitions \
+		-vms $vms \
+		-timeout 5 \
+		-measurementStrategy PARALLEL \
+		-version $version \
+		-pl ":jetty-jmh" \
+		-test $testName	&> regression-$i/measurelog.txt
+	
+	java -jar $PEASS_PROJECT/distribution/target/peass-distribution-0.1-SNAPSHOT.jar getchanges \
+		-data jetty.project_peass/measurementsFull/*.xml &> regression-$i/getchanges.txt
+	mv results/* regression-$i/results/
+}
+
 # This script needs gawk to work (mawk does not work!)
 hasgawk=$(awk 2>&1 | grep gawk)
 if [ -z "$hasgawk" ]
@@ -69,69 +142,18 @@ do
 	mv test.txt regression-$i
 	if [ -f regression-$i/test.txt ]
 	then
-		
-		
-		methodName=$(cat  regression-$i/test.txt | awk -F '#' '{print $2}')
-		clazzName=$(cat regression-$i/test.txt | awk -F '[§#]' '{print $2}')
-		calls=$(cat regression-$i/randomselection.txt | grep "Test: " | uniq | grep $clazzName | grep $methodName | awk '{print $(NF-1)}')
-		
-		echo "Calls: $calls"
-		if [ $calls -gt 10000 ]
-		then
-			repetitions=100
-		else
-			if [ $calls -gt 1000 ]
-			then
-				repetitions=1000
-			else
-				repetitions=100000
-			fi
-		fi
+		repetitions=$(getRepetitions $i)
 		
 		testName=$(cat regression-$i/test.txt)
-		echo "Measuring $testName Calls: $calls Repetitions: $repetitions"
-		java -cp $PEASS_PROJECT/distribution/target/peass-distribution-0.1-SNAPSHOT.jar de.dagere.peass.DependencyTestStarter \
-			-dependencyfile regression-$i/deps_jetty.project_out.json -folder jetty.project/ \
-			-iterations 10 \
-			-warmup 0 \
-			-repetitions $repetitions \
-			-vms $vms \
-			-timeout 5 \
-			-measurementStrategy PARALLEL \
-			-version $version \
-			-pl ":jetty-jmh" \
-			-test $testName	&> regression-$i/measurelog.txt
 		
-		java -jar $PEASS_PROJECT/distribution/target/peass-distribution-0.1-SNAPSHOT.jar getchanges \
-			-data jetty.project_peass/measurementsFull/*.xml &> regression-$i/getchanges.txt
-		mv results/* regression-$i/results/
-		
+		measure $i $testName $version $vms $repetitions
 		changes=$(cat regression-$i/results/changes_*.json | jq ".versionChanges.\"$version\".testcaseChanges | keys[0]")
 		
 		echo "Changes: $changes"
 		
 		if [ ! -z "$changes" ]
 		then
-			mkdir regression-$i/properties_jetty.project
-			java -jar $PEASS_PROJECT/distribution/target/peass-distribution-0.1-SNAPSHOT.jar readproperties \
-				-dependencyfile regression-$i/deps_jetty.project_out.json -folder jetty.project/ \
-				-changefile regression-$i/results/changes_*.json \
-				-viewfolder regression-$i/results/views_jetty.project/ \
-				-out regression-$i/properties_jetty.project/properties.json &> regression-$i/readproperties.txt
-		
-			java -jar $PEASS_PROJECT/distribution/target/peass-distribution-0.1-SNAPSHOT.jar searchcause \
-				-dependencyfile regression-$i/deps_jetty.project_out.json -folder jetty.project/ \
-				-iterations 10 \
-				-warmup 0 \
-				-repetitions $repetitions \
-				-vms $vms \
-				-timeout 5 \
-				-measurementStrategy PARALLEL \
-				--rcaStrategy UNTIL_SOURCE_CHANGE \
-				-propertyFolder regression-$i/properties_jetty.project/ \
-				-version $version \
-				-pl ":jetty-jmh" \
-				-test $testName &> regression-$i/rca.txt
+			executeRCA $i $testName $version $vms $repetitions
 		fi
 	else
 		echo "No test was selected"
