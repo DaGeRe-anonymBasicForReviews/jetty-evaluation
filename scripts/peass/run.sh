@@ -6,6 +6,25 @@
 #net.ipv4.tcp_keepalive_time = 10
 # and call sudo sysctl -p /etc/sysctl.conf 
 
+function executeRTS {
+	i=$1
+	echo "Analyzing $version"
+	java -cp $PEASS_PROJECT/distribution/target/peass-distribution-0.1-SNAPSHOT.jar de.dagere.peass.debugtools.DependencyReadingContinueStarter \
+		-dependencyfile deps_jetty.project.json \
+		-folder jetty.project/ \
+		-skipProcessSuccessRuns \
+		-pl ":jetty-jmh" \
+		-doNotUpdateDependencies &> regression-$i/dependencylog.txt
+	mv results/deps_jetty.project_out.json regression-$i
+
+	java -cp $PEASS_PROJECT/distribution/target/peass-distribution-0.1-SNAPSHOT.jar de.dagere.peass.dependency.traces.TraceGeneratorStarter \
+	        -dependencyfile regression-$i/deps_jetty.project_out.json \
+	        -pl ":jetty-jmh" \
+		-folder jetty.project &> regression-$i/tracelog.txt
+	mkdir -p regression-$i/results
+	mv results/views_jetty.project regression-$i/results
+}
+
 function executeRCA {
 	i=$1
 	testName=$2
@@ -38,7 +57,7 @@ function getRepetitions {
 	i=$1
 	methodName=$(cat  regression-$i/test.txt | awk -F '#' '{print $2}')
 	clazzName=$(cat regression-$i/test.txt | awk -F '[§#]' '{print $2}')
-	calls=$(cat regression-$i/randomselection.txt | grep "Test: " | uniq | grep $clazzName | grep $methodName | awk '{print $(NF-1)}')
+	calls=$(cat regression-$i/randomselection.txt | grep "Test: " | uniq | grep $clazzName | grep $methodName | awk '{print $(NF-1)}' | uniq)
 	
 	if [ $calls -gt 10000 ]
 	then
@@ -106,28 +125,19 @@ vms=30
 for i in 1
 do
 	cd jetty.project/ && git checkout regression-$i &> ../checkout.txt
-
+	
 	version=$(git rev-parse HEAD)
 	cd ..
+	
+	if [ -d results/ ]
+	then
+		rm results/* -rf
+	fi
 
 	mkdir regression-$i
 	mv checkout.txt regression-$i
 	
-	echo "Analyzing $version"
-	java -cp $PEASS_PROJECT/distribution/target/peass-distribution-0.1-SNAPSHOT.jar de.dagere.peass.debugtools.DependencyReadingContinueStarter \
-		-dependencyfile deps_jetty.project.json \
-		-folder jetty.project/ \
-		-skipProcessSuccessRuns \
-		-pl ":jetty-jmh" \
-		-doNotUpdateDependencies &> regression-$i/dependencylog.txt
-	mv results/deps_jetty.project_out.json regression-$i
-
-	java -cp $PEASS_PROJECT/distribution/target/peass-distribution-0.1-SNAPSHOT.jar de.dagere.peass.dependency.traces.TraceGeneratorStarter \
-	        -dependencyfile regression-$i/deps_jetty.project_out.json \
-	        -pl ":jetty-jmh" \
-		-folder jetty.project &> regression-$i/tracelog.txt
-	mkdir -p regression-$i/results
-	mv results/views_jetty.project regression-$i/results
+	executeRTS $i
 
 	method=$(cat ../regressions.csv | grep "regression-$i;" | awk -F';' '{print $3}')
 
@@ -147,7 +157,9 @@ do
 		testName=$(cat regression-$i/test.txt)
 		
 		measure $i $testName $version $vms $repetitions
-		changes=$(cat regression-$i/results/changes_*.json | jq ".versionChanges.\"$version\".testcaseChanges | keys[0]")
+		
+		foundVersion=$(cat regression-$i/results/changes_*.json | jq ".versionChanges | keys[0]")
+		changes=$(cat regression-$i/results/changes_*.json | jq ".versionChanges.\"$foundVersion\".testcaseChanges | keys[0]")
 		
 		echo "Changes: $changes"
 		

@@ -8,8 +8,7 @@ target/
 src/main/resources/peass/dependencylog.txt
 scripts/peass/jetty-traces/
 scripts/peass/jetty.project/
+scripts/peass/jetty.project_peass/
 scripts/peass/regression-*
-src/main/resources/peass/jetty.project/
-src/main/resources/peass/jetty.project_peass/
 src/main/resources/peass/results/
 src/main/resources/peass/test.txt
