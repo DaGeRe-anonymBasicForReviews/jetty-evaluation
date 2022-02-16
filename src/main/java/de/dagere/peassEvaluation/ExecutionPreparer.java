@@ -21,9 +21,18 @@ import net.kieker.sourceinstrumentation.AllowedKiekerRecord;
 import net.kieker.sourceinstrumentation.InstrumentationConfiguration;
 import net.kieker.sourceinstrumentation.instrument.InstrumentKiekerSource;
 
+/**
+ * Instruments the project to trees can be generated
+ * @author DaGeRe
+ *
+ */
 public class ExecutionPreparer {
    public static void main(final String[] args) throws FileNotFoundException, IOException, XmlPullParserException {
       File projectFolder = new File(args[0]);
+      instrumentProject(projectFolder);
+   }
+
+   private static void instrumentProject(File projectFolder) throws IOException, XmlPullParserException, FileNotFoundException {
       ProjectModules modules = MavenPomUtil.getModules(new File(projectFolder, "pom.xml"), new ExecutionConfig());
       List<File> moduleList = modules.getModules();
       for (File module : moduleList) {
