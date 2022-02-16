@@ -2,14 +2,22 @@ package de.dagere.peassEvaluation;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.util.ArrayList;
 import java.util.concurrent.Callable;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.codehaus.plexus.util.xml.pull.XmlPullParserException;
 
+import com.fasterxml.jackson.core.exc.StreamWriteException;
+import com.fasterxml.jackson.databind.DatabindException;
+
 import de.dagere.peass.config.ExecutionConfig;
+import de.dagere.peass.config.KiekerConfig;
+import de.dagere.peass.dependency.analysis.CalledMethodLoader;
 import de.dagere.peass.dependency.analysis.ModuleClassMapping;
+import de.dagere.peass.dependency.analysis.data.TraceElement;
 import de.dagere.peass.execution.maven.pom.MavenPomUtil;
 import de.dagere.peass.execution.utils.ProjectModules;
 import de.dagere.peass.measurement.rca.data.CallTreeNode;
@@ -46,29 +54,66 @@ public class GetTrees implements Callable<Void> {
    public Void call() throws Exception {
       File treeFolder = new File(dataFolder, "trees");
       File traceFolder = new File(dataFolder, "traces");
+      File simpleTraceFolder = new File(dataFolder, "simpleTraces");
       treeFolder.mkdirs();
+      simpleTraceFolder.mkdirs();
       ProjectModules modules = MavenPomUtil.getModules(new File(projectFolder, "pom.xml"), new ExecutionConfig());
       ModuleClassMapping mapping = new ModuleClassMapping(projectFolder, modules, new ExecutionConfig());
       for (File kiekerFolder : traceFolder.listFiles()) {
-         System.out.println("Analyzing: " + kiekerFolder.getAbsolutePath());
-         TreeStageUnknownRoot stage = executeTreeStage(kiekerFolder, true, mapping);
-         CallTreeNode root = stage.getRoot();
+         LOG.info("Analyzing: " + kiekerFolder.getAbsolutePath());
+         CallTreeNode root = readTree(treeFolder, mapping, kiekerFolder);
+         
          if (root != null) {
-            System.out.println("Root: " + root.getCall());
-
-            File treeFile = new File(treeFolder, root.getCall() + ".json");
-            int i = 0;
-            while (treeFile.exists()) {
-               i++;
-               treeFile = new File(treeFolder, root.getCall() + "_" + i + ".json");
-            }
-            Constants.OBJECTMAPPER.writeValue(treeFile, root);
-         } else {
-            LOG.error("No root in " + kiekerFolder.getAbsolutePath());
+            writeSimpleTrace(simpleTraceFolder, mapping, kiekerFolder, root);
          }
-
       }
       return null;
+   }
+
+   private void writeSimpleTrace(File simpleTraceFolder, ModuleClassMapping mapping, File kiekerFolder, CallTreeNode root) throws IOException {
+      File usableFile = findUsableFile(simpleTraceFolder, root.getCall(), ".txt");
+      CalledMethodLoader loader = new CalledMethodLoader(kiekerFolder, mapping, new KiekerConfig());
+      ArrayList<TraceElement> shortTrace = loader.getShortTrace("");
+
+      // Big traces are not handled
+      if (shortTrace != null) {
+         StringBuilder builder = new StringBuilder();
+         shortTrace.forEach(element -> 
+            builder.append(element != null ? element.toString() : "")
+                   .append("\n"));
+         
+         Files.write(usableFile.toPath(), builder.toString().getBytes());
+      }
+      
+   }
+
+   public void readTrace(File traceFolder, ModuleClassMapping mapping, File kiekerFolder) {
+
+   }
+
+   private CallTreeNode readTree(File treeFolder, ModuleClassMapping mapping, File kiekerFolder) throws IOException, StreamWriteException, DatabindException {
+      TreeStageUnknownRoot stage = executeTreeStage(kiekerFolder, true, mapping);
+      CallTreeNode root = stage.getRoot();
+      if (root != null) {
+         System.out.println("Root: " + root.getCall());
+
+         String call = root.getCall();
+         File treeFile = findUsableFile(treeFolder, call, ".json");
+         Constants.OBJECTMAPPER.writeValue(treeFile, root);
+      } else {
+         LOG.error("No root in " + kiekerFolder.getAbsolutePath());
+      }
+      return root;
+   }
+
+   private File findUsableFile(File treeFolder, String call, String ending) {
+      File treeFile = new File(treeFolder, call + ending);
+      int i = 0;
+      while (treeFile.exists()) {
+         i++;
+         treeFile = new File(treeFolder, call + "_" + i + ending);
+      }
+      return treeFile;
    }
 
    public static TreeStageUnknownRoot executeTreeStage(final File kiekerTraceFolder, final boolean ignoreEOIs, final ModuleClassMapping mapping) {
