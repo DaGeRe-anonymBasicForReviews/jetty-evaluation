@@ -1,8 +1,11 @@
 function isSelected {
 	regression=$1
+	tar -xvf $regression/deps.tar.xz -C $regression &> /dev/null
+	ls $regression >> results/regression
 	versions=$(cat $regression/deps_jetty.project_out.json | jq ".versions")
 	version=$(echo $versions | jq "keys[1]")
 	vals=$(echo $versions | jq ".$version.changedClazzes | .[]")
+	rm $regression/deps_jetty.project_out.json
 	if [ "$vals" == "{}" ]
 	then
 		echo "0"
@@ -90,6 +93,10 @@ function printRCACorrectLeaf {
 	done
 }
 
+startfolder=$(pwd)
+
+cd $1
+
 mkdir -p results
 
 printCorrect
@@ -115,3 +122,5 @@ cat results/rcaMissing.txt | wc -l
 
 echo -n "Overall: "
 ls | grep regression | wc -l
+
+cd $startfolder
