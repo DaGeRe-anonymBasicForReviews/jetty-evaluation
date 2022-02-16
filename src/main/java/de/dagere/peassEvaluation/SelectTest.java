@@ -20,7 +20,6 @@ import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.body.ClassOrInterfaceDeclaration;
 import com.github.javaparser.ast.body.MethodDeclaration;
 
-import de.dagere.peass.dependency.ClazzFileFinder;
 import de.dagere.peass.dependency.analysis.data.ChangedEntity;
 import de.dagere.peass.dependency.analysis.data.TestCase;
 import de.dagere.peass.dependency.analysis.data.TestSet;
@@ -158,7 +157,7 @@ public class SelectTest implements Callable<Void> {
       List<TestCase> withoutSleepTests = new LinkedList<>();
       for (TestCase tc : tests.getTests()) {
          File moduleFile = new File(projectFolder, tc.getModule());
-         File clazzFile = ClazzFileFinder.getClazzFile(moduleFile, tc.toEntity());
+         File clazzFile = JettyEvaluationConstants.FINDER.getClazzFile(moduleFile, tc.toEntity());
          CompilationUnit unit = JavaParserProvider.parse(clazzFile);
          for (ClassOrInterfaceDeclaration clazz : ClazzFinder.getClazzDeclarations(unit)) {
             if (clazz.getNameAsString().equals(tc.getShortClazz())) {

@@ -10,8 +10,8 @@ import org.codehaus.plexus.util.xml.pull.XmlPullParserException;
 
 import de.dagere.peass.config.ExecutionConfig;
 import de.dagere.peass.dependency.analysis.ModuleClassMapping;
-import de.dagere.peass.dependency.execution.ProjectModules;
-import de.dagere.peass.dependency.execution.pom.MavenPomUtil;
+import de.dagere.peass.execution.maven.pom.MavenPomUtil;
+import de.dagere.peass.execution.utils.ProjectModules;
 import de.dagere.peass.measurement.rca.data.CallTreeNode;
 import de.dagere.peass.utils.Constants;
 import de.dagere.peassEvaluation.treeReading.KiekerTreeReaderConfiguration;
@@ -48,7 +48,7 @@ public class GetTrees implements Callable<Void> {
       File traceFolder = new File(dataFolder, "traces");
       treeFolder.mkdirs();
       ProjectModules modules = MavenPomUtil.getModules(new File(projectFolder, "pom.xml"), new ExecutionConfig());
-      ModuleClassMapping mapping = new ModuleClassMapping(projectFolder, modules);
+      ModuleClassMapping mapping = new ModuleClassMapping(projectFolder, modules, new ExecutionConfig());
       for (File kiekerFolder : traceFolder.listFiles()) {
          System.out.println("Analyzing: " + kiekerFolder.getAbsolutePath());
          TreeStageUnknownRoot stage = executeTreeStage(kiekerFolder, true, mapping);

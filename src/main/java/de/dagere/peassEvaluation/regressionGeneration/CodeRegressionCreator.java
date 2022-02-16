@@ -16,12 +16,12 @@ import com.github.javaparser.ast.body.TypeDeclaration;
 import com.github.javaparser.ast.stmt.BlockStmt;
 import com.github.javaparser.ast.stmt.Statement;
 
-import de.dagere.peass.dependency.ClazzFileFinder;
 import de.dagere.peass.dependency.analysis.data.ChangedEntity;
 import de.dagere.peass.dependency.changesreading.ClazzFinder;
 import de.dagere.peass.dependency.changesreading.JavaParserProvider;
+import de.dagere.peass.dependency.traces.TraceElementContent;
 import de.dagere.peass.dependency.traces.TraceReadUtils;
-import de.dagere.peass.dependency.traces.requitur.content.TraceElementContent;
+import de.dagere.peassEvaluation.JettyEvaluationConstants;
 
 public class CodeRegressionCreator {
    private final File projectFolder;
@@ -32,7 +32,7 @@ public class CodeRegressionCreator {
 
    public void createCodeRegression(final ChangedEntity entity) throws FileNotFoundException, IOException {
       File module = new File(projectFolder, entity.getModule());
-      File clazzFile = ClazzFileFinder.getClazzFile(module, entity);
+      File clazzFile = JettyEvaluationConstants.FINDER.getClazzFile(module, entity);
       if (clazzFile.exists()) {
          CompilationUnit unit = JavaParserProvider.parse(clazzFile);
          TraceElementContent methodTraceElement = new TraceElementContent(entity.getClazz(), entity.getMethod(), entity.getParameterTypes(), -1);

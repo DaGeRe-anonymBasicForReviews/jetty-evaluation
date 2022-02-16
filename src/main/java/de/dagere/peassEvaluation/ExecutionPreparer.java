@@ -14,9 +14,9 @@ import org.apache.maven.model.io.xpp3.MavenXpp3Writer;
 import org.codehaus.plexus.util.xml.pull.XmlPullParserException;
 
 import de.dagere.peass.config.ExecutionConfig;
-import de.dagere.peass.dependency.execution.ProjectModules;
-import de.dagere.peass.dependency.execution.pom.MavenPomUtil;
 import de.dagere.peass.dependency.moduleinfo.ModuleInfoEditor;
+import de.dagere.peass.execution.maven.pom.MavenPomUtil;
+import de.dagere.peass.execution.utils.ProjectModules;
 import net.kieker.sourceinstrumentation.AllowedKiekerRecord;
 import net.kieker.sourceinstrumentation.InstrumentationConfiguration;
 import net.kieker.sourceinstrumentation.instrument.InstrumentKiekerSource;
