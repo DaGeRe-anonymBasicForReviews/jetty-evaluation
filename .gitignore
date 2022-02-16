@@ -12,3 +12,5 @@ scripts/peass/jetty.project_peass/
 scripts/peass/regression-*
 src/main/resources/peass/results/
 src/main/resources/peass/test.txt
+scripts/treeCreation/build.txt
+scripts/treeCreation/execution.txt

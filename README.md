@@ -6,10 +6,13 @@ It is assumed that `$PROJECTFOLDER` is your local jetty folder (execute `git clo
 
 ## Tree Reading
 
+If you want to execute all steps, do `cd scripts/treeCreation && ./getTrees.sh $PROJECTFOLDER`.
+
+If you want to execute (and potentially debug) single steps, execute the following steps:
 - Instrument your project folder running `java -cp target/jetty-evaluation-0.1-SNAPSHOT.jar de.dagere.peassEvaluation.ExecutionPreparer $PROJECTFOLDER`
 - Generate the jmh jar by `mvn -V -B clean install -DskipTests -Dlicense.skip -Denforcer.skip -Dcheckstyle.skip -T6 -e -pl :jetty-jmh -am`
 - Execute the trace creation by `cp src/main/resources/getTrees.sh $PROJECTFOLDER/ && cd $PROJECTFOLDER && ./getTrees.sh`
-- Analyse the traces running `java -cp target/jetty-evaluation-0.1-SNAPSHOT.jar de.dagere.peassEvaluation.GetTrees -projectFolder $PROJECTFOLDER -tree $PROJECTFOLDER/tree-results/traces/`
+- Analyse the traces running `java -cp target/jetty-evaluation-0.1-SNAPSHOT.jar de.dagere.peassEvaluation.GetTrees -projectFolder $PROJECTFOLDER -dataFolder $PROJECTFOLDER/tree-results/`
 
 ## Regression Injection
 
