@@ -10,6 +10,12 @@ scripts/peass/jetty-traces/
 scripts/peass/jetty.project/
 scripts/peass/jetty.project_peass/
 scripts/peass/regression-*
+scripts/jmh/correctValues.csv
+scripts/jmh/identified.txt
+scripts/jmh/invocations.txt
+scripts/jmh/wrongMeasurementValues.csv
+scripts/treeCreation/calls.txt
+scripts/treeCreation/invocations.txt
 src/main/resources/peass/results/
 src/main/resources/peass/test.txt
 scripts/treeCreation/build.txt
