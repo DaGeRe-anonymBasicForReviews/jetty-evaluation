@@ -1,7 +1,7 @@
 function executeRTS {
 	i=$1
 	echo "Analyzing $version"
-	java -cp $PEASS_PROJECT/distribution/target/peass-distribution-0.1-SNAPSHOT.jar de.dagere.peass.debugtools.DependencyReadingContinueStarter \
+	java -cp $PEASS_PROJECT/starter/target/peass-starter-*-SNAPSHOT.jar de.dagere.peass.debugtools.DependencyReadingContinueStarter \
 		-dependencyfile deps_jetty.project.json \
 		-folder jetty.project/ \
 		-skipProcessSuccessRuns \
@@ -9,7 +9,7 @@ function executeRTS {
 		-doNotUpdateDependencies &> regression-$i/dependencylog.txt
 	mv results/deps_jetty.project_out.json regression-$i
 
-	java -cp $PEASS_PROJECT/distribution/target/peass-distribution-0.1-SNAPSHOT.jar de.dagere.peass.dependency.traces.TraceGeneratorStarter \
+	java -cp $PEASS_PROJECT/starter/target/peass-starter-*-SNAPSHOT.jar de.dagere.peass.dependency.traces.TraceGeneratorStarter \
 	        -dependencyfile regression-$i/deps_jetty.project_out.json \
 	        -pl ":jetty-jmh" \
 		-folder jetty.project &> regression-$i/tracelog.txt
@@ -24,13 +24,13 @@ function executeRCA {
 	vms=$4
 	repetitions=$5
 	mkdir regression-$i/properties_jetty.project
-	java -jar $PEASS_PROJECT/distribution/target/peass-distribution-0.1-SNAPSHOT.jar readproperties \
+	java -jar $PEASS_PROJECT/starter/target/peass-starter-*-SNAPSHOT.jar readproperties \
 		-dependencyfile regression-$i/deps_jetty.project_out.json -folder jetty.project/ \
 		-changefile regression-$i/results/changes_*.json \
 		-viewfolder regression-$i/results/views_jetty.project/ \
 		-out regression-$i/properties_jetty.project/properties.json &> regression-$i/readproperties.txt
 
-	java -jar $PEASS_PROJECT/distribution/target/peass-distribution-0.1-SNAPSHOT.jar searchcause \
+	java -jar $PEASS_PROJECT/starter/target/peass-starter-*-SNAPSHOT.jar searchcause \
 		-dependencyfile regression-$i/deps_jetty.project_out.json -folder jetty.project/ \
 		-iterations 10 \
 		-warmup 0 \
@@ -73,7 +73,7 @@ function measure {
 	repetitions=$5
 
 	echo "Measuring $testName Repetitions: $repetitions"
-	java -cp $PEASS_PROJECT/distribution/target/peass-distribution-0.1-SNAPSHOT.jar de.dagere.peass.DependencyTestStarter \
+	java -cp $PEASS_PROJECT/starter/target/peass-starter-*-SNAPSHOT.jar de.dagere.peass.DependencyTestStarter \
 		-dependencyfile regression-$i/deps_jetty.project_out.json -folder jetty.project/ \
 		-iterations 10 \
 		-warmup 0 \
@@ -85,7 +85,7 @@ function measure {
 		-pl ":jetty-jmh" \
 		-test $testName	&> regression-$i/measurelog.txt
 	
-	java -jar $PEASS_PROJECT/distribution/target/peass-distribution-0.1-SNAPSHOT.jar getchanges \
+	java -jar $PEASS_PROJECT/starter/target/peass-starter-*-SNAPSHOT.jar getchanges \
 		-data jetty.project_peass/measurementsFull/*.xml &> regression-$i/getchanges.txt
 	mv results/* regression-$i/results/
 }

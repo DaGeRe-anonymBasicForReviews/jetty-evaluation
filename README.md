@@ -27,3 +27,9 @@ If you want to execute (and potentially debug) single steps, execute the followi
 
 
 ## Measurement with Peass
+
+If you have a slurm cluster available, where you can reserve nodes exclusively, we recommend to run `startOnSlurm.sh` (and adapt the path to maven and Java in `runOnSlurm.sh`).
+
+If you do not have a slurm cluster, you can start the measurement by `run.sh`, setting the regressions you want to analyze, e.g. {1..100} in the for loop.
+
+This requires gawk (mawk will not work).
