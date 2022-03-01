@@ -12,7 +12,7 @@ import de.dagere.peassEvaluation.statistics.JmhReader;
 
 public class ReadJMHMeasuredRegressions {
 
-   private static AllChanges changes = new AllChanges();
+   private static AllChanges allChanges = new AllChanges();
 
    public static void main(final String[] args) throws IOException {
       File measurementFolder = new File(args[0]);
@@ -31,11 +31,11 @@ public class ReadJMHMeasuredRegressions {
 
       }
 
-      for (Change change : changes.changes) {
+      for (Change change : allChanges.changes) {
          double tValue = new TTest().t(change.values.getStatistics(), change.valuesOld.getStatistics());
          System.out.println(change.version + " " + change.benchmark + " " + tValue);
       }
-      System.out.println(changes.changes.size());
+      System.out.println(allChanges.changes.size());
    }
 
    private static void compareValues(final String version, final String benchmark, final List<JmhBenchmarkValues> values, final List<JmhBenchmarkValues> currentBenchmarkValues) {
@@ -47,7 +47,7 @@ public class ReadJMHMeasuredRegressions {
                if (isChange) {
                   System.out.println("Change in " + oldValue.getParams() + " " + value.getParams());
                   System.out.println(oldValue.getStatistics().getMean() + " " + value.getStatistics().getMean());
-                  changes.changes.add(new Change(version, benchmark, oldValue, value));
+                  allChanges.changes.add(new Change(version, benchmark, oldValue, value));
                }
             }
          });
