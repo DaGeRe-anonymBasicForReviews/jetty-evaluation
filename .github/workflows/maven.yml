@@ -30,17 +30,17 @@ jobs:
       if: startsWith(matrix.os,'ubuntu')
       run: |
         BASE_DIRECTORY=$(pwd)
-        cd $HOME && git clone https://github.com/DaGeRe/peass.git && cd peass && mvn clean install -DskipTests
+        cd $HOME && git clone -b develop https://github.com/DaGeRe/peass.git && cd peass && mvn clean install -DskipTests
         cd $BASE_DIRECTORY && ./mvnw -B package --file pom.yaml
     - name: Build on Windows
       if: startsWith(matrix.os,'windows')
       run: |
         git config --system core.longpaths true
-        cd "C:\Program Files" && git clone https://github.com/DaGeRe/peass.git && cd peass && mvn clean install -DskipTests
+        cd "C:\Program Files" && git clone -b develop https://github.com/DaGeRe/peass.git && cd peass && mvn clean install -DskipTests
         cd "D:\a\jetty-evaluation\jetty-evaluation" && mvn -B package --file pom.yaml
     - name: Build on macOS
       if: startsWith(matrix.os,'macos')
       run: |
         BASE_DIRECTORY=$(pwd)
-        cd $HOME && git clone https://github.com/DaGeRe/peass.git && cd peass && mvn clean install -DskipTests
+        cd $HOME && git clone -b develop https://github.com/DaGeRe/peass.git && cd peass && mvn clean install -DskipTests
         cd $BASE_DIRECTORY && mvn -B package --file pom.yaml
