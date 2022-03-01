@@ -25,4 +25,4 @@ java -cp target/jetty-evaluation-0.1-SNAPSHOT.jar de.dagere.peassEvaluation.Exec
 (cd $PROJECTFOLDER && java -jar tests/jetty-jmh/target/benchmarks.jar -bm ss -i 100 -f 1 \
 	-jvmArgsAppend "-Dkieker.monitoring.core.controller.WriterController.RecordQueueFQN=java.util.concurrent.ArrayBlockingQueue -Djava.io.tmpdir=$treefolder/traces" &> $start/execution.txt)
 
-java -cp target/jetty-evaluation-0.1-SNAPSHOT.jar de.dagere.peassEvaluation.GetTrees -projectFolder $PROJECTFOLDER -dataFolder $treefolder
+java -cp target/jetty-evaluation-0.1-SNAPSHOT.jar de.dagere.peassEvaluation.GetTrees -projectFolder $PROJECTFOLDER -dataFolder $treefolder &> $start/treeReading.txt
