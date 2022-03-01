@@ -18,11 +18,11 @@ mkdir -p $treefolder/traces
 cd ../../
 
 mvn clean package &> $start/build.txt
-java -cp target/jetty-evaluation-0.1-SNAPSHOT.jar de.dagere.peassEvaluation.ExecutionPreparer $PROJECTFOLDER $start/preparation.txt
+java -cp target/jetty-evaluation-0.1-SNAPSHOT.jar de.dagere.peassEvaluation.ExecutionPreparer $PROJECTFOLDER &> $start/preparation.txt
 
-(cd $PROJECTFOLDER && mvn -V -B clean install -DskipTests -Dlicense.skip -Denforcer.skip -Dcheckstyle.skip -T6 -e -pl :jetty-jmh -am &> $start/execution.txt)
+(cd $PROJECTFOLDER && mvn -V -B clean install -DskipTests -Dlicense.skip -Denforcer.skip -Dcheckstyle.skip -T6 -e -pl :jetty-jmh -am &> $start/compilation.txt)
 
 (cd $PROJECTFOLDER && java -jar tests/jetty-jmh/target/benchmarks.jar -bm ss -i 100 -f 1 \
-	-jvmArgsAppend "-Dkieker.monitoring.core.controller.WriterController.RecordQueueFQN=java.util.concurrent.ArrayBlockingQueue -Djava.io.tmpdir=$treefolder/traces")
+	-jvmArgsAppend "-Dkieker.monitoring.core.controller.WriterController.RecordQueueFQN=java.util.concurrent.ArrayBlockingQueue -Djava.io.tmpdir=$treefolder/traces" &> $start/execution.txt)
 
-java -cp ../../target/jetty-evaluation-0.1-SNAPSHOT.jar de.dagere.peassEvaluation.GetTrees -projectFolder $PROJECTFOLDER -dataFolder $PROJECTFOLDER/../tree-results/
+java -cp target/jetty-evaluation-0.1-SNAPSHOT.jar de.dagere.peassEvaluation.GetTrees -projectFolder $PROJECTFOLDER -dataFolder $treefolder
