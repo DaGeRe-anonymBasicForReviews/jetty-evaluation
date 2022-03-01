@@ -26,7 +26,7 @@ import de.dagere.peass.dependency.analysis.data.TestSet;
 import de.dagere.peass.dependency.changesreading.ClazzFinder;
 import de.dagere.peass.dependency.changesreading.JavaParserProvider;
 import de.dagere.peass.dependency.persistence.Dependencies;
-import de.dagere.peass.dependency.persistence.Version;
+import de.dagere.peass.dependency.persistence.VersionStaticSelection;
 import de.dagere.peass.testtransformation.TestMethodFinder;
 import de.dagere.peass.utils.Constants;
 import picocli.CommandLine;
@@ -81,7 +81,7 @@ public class SelectTest implements Callable<Void> {
       Dependencies dependencies = Constants.OBJECTMAPPER.readValue(dependencyFile, Dependencies.class);
       String newestVersion = dependencies.getNewestVersion();
 
-      Version version = dependencies.getVersions().get(newestVersion);
+      VersionStaticSelection version = dependencies.getVersions().get(newestVersion);
 
       TestSet tests = version.getTests();
 
