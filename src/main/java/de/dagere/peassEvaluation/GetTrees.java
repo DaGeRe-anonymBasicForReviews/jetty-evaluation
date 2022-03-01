@@ -72,7 +72,9 @@ public class GetTrees implements Callable<Void> {
 
    private void writeSimpleTrace(File simpleTraceFolder, ModuleClassMapping mapping, File kiekerFolder, CallTreeNode root) throws IOException {
       File usableFile = findUsableFile(simpleTraceFolder, root.getCall(), ".txt");
-      CalledMethodLoader loader = new CalledMethodLoader(kiekerFolder, mapping, new KiekerConfig());
+      KiekerConfig kiekerConfig = new KiekerConfig();
+      kiekerConfig.setTraceSizeInMb(10000);
+      CalledMethodLoader loader = new CalledMethodLoader(kiekerFolder, mapping, kiekerConfig);
       ArrayList<TraceElement> shortTrace = loader.getShortTrace("");
 
       // Big traces are not handled
@@ -95,10 +97,11 @@ public class GetTrees implements Callable<Void> {
       TreeStageUnknownRoot stage = executeTreeStage(kiekerFolder, true, mapping);
       CallTreeNode root = stage.getRoot();
       if (root != null) {
-         System.out.println("Root: " + root.getCall());
+         LOG.info("Root: " + root.getCall());
 
          String call = root.getCall();
          File treeFile = findUsableFile(treeFolder, call, ".json");
+         LOG.info("Writing to: {}", treeFile);
          Constants.OBJECTMAPPER.writeValue(treeFile, root);
       } else {
          LOG.error("No root in " + kiekerFolder.getAbsolutePath());
