@@ -23,4 +23,7 @@ scripts/treeCreation/execution.txt
 scripts/treeCreation/compilation.txt
 scripts/treeCreation/preparation.txt
 scripts/treeCreation/treeReading.txt
+scripts/jmh/correctDepth.csv
+scripts/jmh/treeDepth.csv
+scripts/jmh/wrongDepth.csv
 
