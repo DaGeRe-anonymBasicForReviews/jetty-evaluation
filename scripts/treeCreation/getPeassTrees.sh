@@ -28,7 +28,6 @@ do
 		-version $version &> $start/treeLogs/regression-$i
 	mv "$folder"_peass $start/treeResults/regression-$i
 
-	rm randomselection.txt
 	rm deps_jetty.project_out.json
 	echo
 done
