@@ -31,35 +31,43 @@ function getRegressionCalls {
 	echo "$regression ChangedCalls: $changedMethodCalls OverallCalls: $calls"
 }
 
+mkdir -p results
+
 for regression in $(cat identified.txt)
 do
 	getRegressionCalls $regression
-done > correctValues.csv
+done > results/correctValues.csv
 
 for regression in $(cat identified.txt)
 do
 	cat treeDepth.csv | grep $regression" " | awk '{print $4}'
-done > correctDepth.csv
+done > results/correctDepth.csv
 
 
 echo -n "Share of changed method on correct measurements: "
-cat correctValues.csv | awk '{if ($5 != 0) {print $3/$5}}' | getSum
+cat results/correctValues.csv | awk '{if ($5 != 0) {print $3/$5}}' | getSum
+
+echo -n "Method call count on correct measurement: "
+cat results/correctValues.csv | awk '{if ($5 != 0) {print $5}}' | getSum
 
 echo -n "Average tree depth on correct measurements: "
-cat correctDepth.csv | getSum
+cat results/correctDepth.csv | getSum
 
 for regression in $(cat ../regressions.csv | awk -F';' '{print $1}' | grep -vxFf identified.txt)
 do
 	getRegressionCalls $regression
-done > wrongMeasurementValues.csv
+done > results/wrongMeasurementValues.csv
 
 for regression in $(cat ../regressions.csv | awk -F';' '{print $1}' | grep -vxFf identified.txt)
 do
 	cat treeDepth.csv | grep $regression" " | awk '{print $4}'
-done > wrongDepth.csv
+done > results/wrongDepth.csv
 
 echo -n "Share of changed method on wrong measurements: "
-cat wrongMeasurementValues.csv | awk '{if ($5 != 0) {print $3/$5}}' | getSum
+cat results/wrongMeasurementValues.csv | awk '{if ($5 != 0) {print $3/$5}}' | getSum
+
+echo -n "Method call count on wrong measurement: "
+cat results/wrongMeasurementValues.csv | awk '{if ($5 != 0) {print $5}}' | getSum
 
 echo -n "Average tree depth on wrong measurements: "
-cat wrongDepth.csv | getSum
+cat results/wrongDepth.csv | getSum
