@@ -21,8 +21,10 @@ start=$(pwd)
 
 cd $1
 
-printValues results/correct.txt results/correctValues.csv
-printValues results/wrongMeasurementResult.txt results/wrongMeasurementValues.csv
+printValues $start/results/correct.txt $start/results/correctValues.csv
+printValues $start/results/wrongMeasurementResult.txt $start/results/wrongMeasurementValues.csv
+
+cd $start
 
 echo -n "Share of changed method on correct measurements: "
 cat results/correctValues.csv | awk '{print $2/$3}' | getSum
@@ -36,4 +38,4 @@ cat results/wrongMeasurementValues.csv | awk '{print $2/$3}' | getSum
 echo -n "Method call count on wrong measurement: "
 cat results/wrongMeasurementValues.csv | awk '{if ($3 != 0) {print $3}}' | getSum
 
-cd $start
+

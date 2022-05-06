@@ -5,7 +5,7 @@ version: 0.1-SNAPSHOT
 packaging: jar
 name: jetty-evaluation
 dependencies:
-- {groupId: de.dagere.peass, artifactId: analysis, version: 0.1.11-SNAPSHOT}
+- {groupId: de.dagere.peass, artifactId: analysis, version: 0.2.1-SNAPSHOT}
 build:
   plugins:
   - groupId: org.apache.maven.plugins

@@ -18,56 +18,63 @@ function isSelected {
 }
 
 function printCorrect {
-	echo -n > results/notSelectedChanges.txt
-	echo -n > results/wrongMeasurementResult.txt
-	echo -n > results/wrongAnalysis.txt
-	echo -n > results/correct.txt
-	for regression in regression-*
+	resultfolder=$1
+	echo -n > $resultfolder/results/notSelectedChanges.txt
+	echo -n > $resultfolder/results/wrongMeasurementResult.txt
+	echo -n > $resultfolder/results/wrongAnalysis.txt
+	echo -n > $resultfolder/results/correct.txt
+	for regression in $(ls | grep regression- | grep -v ".tar")
 	do 
+		echo "Analyzing $regression"
 		if [ -f $regression/results/changes*json ]
 		then
 			length=$(cat $regression/results/changes*json | jq ".versionChanges | length")
 			if (( $length < 1 ))
 			then
-				echo $regression >> results/wrongMeasurementResult.txt
+				echo $regression >> $resultfolder/results/wrongMeasurementResult.txt
 			else
-				echo $regression >> results/correct.txt
+				echo $regression >> $resultfolder/results/correct.txt
 			fi
 			statisticsLength=$(cat $regression/results/statistics/*json | jq ".statistics | length")
 			if (( $statisticsLength < 1 ))
 			then
-				echo $regression >> results/wrongAnalysis.txt
+				echo $regression >> $resultfolder/results/wrongAnalysis.txt
 			fi
 		else
 			selected=$(isSelected $regression)
 			if [ $selected ]
 			then
-				echo $regression >> results/notSelectedChanges.txt
+				echo $regression >> $resultfolder/results/notSelectedChanges.txt
 			fi
 		fi
 	done
 }
 
-startfolder=$(pwd)
+resultfolder=$(pwd)
 
 cd $1
 
-mkdir -p results
+if [ ! -d $1 ]
+then
+	echo "Please provide a folder with Peass Jetty measurement data!"
+fi
 
-printCorrect
+mkdir -p $resultfolder/results
+
+printCorrect $resultfolder
 echo -n "Correct Measurement: "
-cat results/correct.txt | wc -l
+cat $resultfolder/results/correct.txt | wc -l
 
 echo -n "Not selected changes: "
-cat results/notSelectedChanges.txt | wc -l
+cat $resultfolder/results/notSelectedChanges.txt | wc -l
 
 echo -n "Wrong measurement result: "
-cat results/wrongMeasurementResult.txt | wc -l
+cat $resultfolder/results/wrongMeasurementResult.txt | wc -l
 
 echo -n "Wrong analysis (should be 0): "
-cat results/wrongAnalysis.txt | wc -l
+cat $resultfolder/results/wrongAnalysis.txt | wc -l
 
 echo -n "Overall: "
-ls | grep regression | wc -l
+ls | grep regression | grep -v ".tar" | wc -l
 
-cd $startfolder
+cd $resultfolder
